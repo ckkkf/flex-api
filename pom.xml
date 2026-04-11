@@ -29,7 +29,10 @@
     </scm>
     <properties>
         <java.version>26</java.version>
+        <spring-boot.version>4.0.5</spring-boot.version>
+        <sa-token.version>1.45.0</sa-token.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -52,6 +55,12 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+        <!-- Sa-Token 权限认证，在线文档：https://sa-token.cc -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-spring-boot4-starter</artifactId>
+            <version>${sa-token.version}</version>
         </dependency>
     </dependencies>
 
