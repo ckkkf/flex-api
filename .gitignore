@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+# 忽略所有包含真实敏感信息的配置文件
+.env
+/src/main/resources/application-dev.yaml
+/src/main/resources/application-prod.yaml
+/src/main/resources/application-test.yaml
