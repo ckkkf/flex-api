@@ -10,6 +10,7 @@
     "@visactor/react-vchart": "~1.8.8",
     "@visactor/vchart": "~1.8.8",
     "@visactor/vchart-semi-theme": "~1.8.8",
+    "antd": "5.23.0",
     "axios": "1.13.5",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.11",
@@ -73,6 +74,8 @@
     ]
   },
   "devDependencies": {
+    "@douyinfe/semi-foundation": "^2.94.0",
+    "@douyinfe/semi-theme-default": "^2.94.0",
     "@douyinfe/vite-plugin-semi": "^2.74.0-alpha.6",
     "@so1ve/prettier-config": "^3.1.0",
     "@vitejs/plugin-react": "^4.2.1",
