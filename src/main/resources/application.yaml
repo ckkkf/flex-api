@@ -6,12 +6,18 @@ spring:
     name: flex-api
   profiles:
     active: dev
-  datasource:
-    # 驱动类名
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${flexapi.datasource.host}:${flexapi.datasource.port}/${flexapi.datasource.database}?currentSchema=public&reWriteBatchedInserts=true
+  ### r2dbc
+  r2dbc:
+    url: r2dbc:pool:postgresql://${flexapi.datasource.host}:${flexapi.datasource.port}/${flexapi.datasource.database}
     username: ${flexapi.datasource.username}
     password: ${flexapi.datasource.password}
+    # 连接池详细配置
+    pool:
+      enabled: true
+      max-size: 10
+      initial-size: 10
+      # 增加最大空闲时间，防止 PG 端主动断开导致的“破损连接”
+      max-idle-time: 30m
 
 ############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
 sa-token:
@@ -30,3 +36,4 @@ sa-token:
   token-style: uuid
   # 是否输出操作日志
   is-log: true
+
