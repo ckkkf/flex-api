@@ -8,7 +8,7 @@ spring:
     active: dev
   ### r2dbc
   r2dbc:
-    url: r2dbc:pool:postgresql://${flexapi.datasource.host}:${flexapi.datasource.port}/${flexapi.datasource.database}
+    url: r2dbc:postgresql://${flexapi.datasource.host}:${flexapi.datasource.port}/${flexapi.datasource.database}
     username: ${flexapi.datasource.username}
     password: ${flexapi.datasource.password}
     # 连接池详细配置
