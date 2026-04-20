@@ -3,6 +3,8 @@ package cc.flexapi.service;
 import cc.flexapi.domain.dto.UsersManagerDTO;
 import cc.flexapi.domain.dto.UsersManagerEditDTO;
 import cc.flexapi.domain.po.Users;
+import cc.flexapi.model.request.UserManageRequest;
+import cc.flexapi.model.response.P;
 import com.baomidou.mybatisplus.extension.service.IService;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -34,8 +36,16 @@ public interface ManagementService extends IService<Users> {
     Mono<Users> findById(String id);
 
 
-    Flux<Users> search(String query);
+    
 
 
     Flux<List<Users>> listUser();
+
+    void updateUser(UserManageRequest userManageRequest);
+
+    void edit(UsersManagerEditDTO usersManagerEditDTO);
+
+    Flux<P<Users>> findAll();
+
+    Flux<P<Users>> search(String query, Integer p, Integer pageSize);
 }

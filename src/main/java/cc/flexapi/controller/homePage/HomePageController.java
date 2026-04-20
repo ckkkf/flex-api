@@ -1,0 +1,35 @@
+package cc.flexapi.controller.homePage;
+
+import cc.flexapi.model.response.R;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
+
+/**
+ * @author ckkk
+ * @version 1.0
+ * @description
+ * @since 2026-04-18 14:10
+ */
+@Slf4j
+@RestController
+public class HomePageController {
+
+    @GetMapping("/home_page_content")
+    public Mono<R<String>> getContent() {
+        return R.ok(Mono.just("home_page_content"));
+    }
+    @GetMapping("/status")
+    public Mono<R<JSONObject>> getStatus() {
+        return R.ok(Mono.just(JSONUtil.parseObj("{\"HeaderNavModules\":\"\",\"SidebarModulesAdmin\":\"\",\"announcements\":[],\"announcements_enabled\":true,\"api_info\":[],\"api_info_enabled\":true,\"chats\":[{\"Cherry Studio\":\"cherrystudio://providers/api-keys?v=1&data={cherryConfig}\"},{\"AionUI\":\"aionui://provider/add?v=1&data={aionuiConfig}\"},{\"流畅阅读\":\"fluentread\"},{\"CC Switch\":\"ccswitch\"},{\"Lobe Chat 官方示例\":\"https://chat-preview.lobehub.com/?settings={\\\"keyVaults\\\":{\\\"openai\\\":{\\\"apiKey\\\":\\\"{key}\\\",\\\"baseURL\\\":\\\"{address}/v1\\\"}}}\"},{\"AI as Workspace\":\"https://aiaw.app/set-provider?provider={\\\"type\\\":\\\"openai\\\",\\\"settings\\\":{\\\"apiKey\\\":\\\"{key}\\\",\\\"baseURL\\\":\\\"{address}/v1\\\",\\\"compatibility\\\":\\\"strict\\\"}}\"},{\"AMA 问天\":\"ama://set-api-key?server={address}&key={key}\"},{\"OpenCat\":\"opencat://team/join?domain={address}&token={key}\"}],\"checkin_enabled\":true,\"custom_currency_exchange_rate\":1,\"custom_currency_symbol\":\"¤\",\"data_export_default_time\":\"hour\",\"default_collapse_sidebar\":false,\"default_use_auto_group\":false,\"demo_site_enabled\":false,\"discord_client_id\":\"\",\"discord_oauth\":false,\"display_in_currency\":true,\"docs_link\":\"https://docs.newapi.pro\",\"email_verification\":false,\"enable_batch_update\":true,\"enable_data_export\":true,\"enable_drawing\":true,\"enable_task\":true,\"faq\":[],\"faq_enabled\":true,\"footer_html\":\"\",\"github_client_id\":\"\",\"github_oauth\":false,\"linuxdo_client_id\":\"\",\"linuxdo_minimum_trust_level\":0,\"linuxdo_oauth\":false,\"logo\":\"\",\"mj_notify_enabled\":false,\"oidc_authorization_endpoint\":\"\",\"oidc_client_id\":\"\",\"oidc_enabled\":false,\"passkey_allow_insecure\":false,\"passkey_attachment\":\"\",\"passkey_display_name\":\"Flex API\",\"passkey_login\":true,\"passkey_origins\":\"https://newapi.flexapi.club\",\"passkey_rp_id\":\"https://newapi.flexapi.club\",\"passkey_user_verification\":\"preferred\",\"price\":7.3,\"privacy_policy_enabled\":false,\"quota_display_type\":\"USD\",\"quota_per_unit\":500000,\"self_use_mode_enabled\":false,\"server_address\":\"https://newapi.flexapi.club\",\"setup\":true,\"start_time\":1775190396,\"stripe_unit_price\":8,\"system_name\":\"Flex API\",\"telegram_bot_name\":\"\",\"telegram_oauth\":false,\"top_up_link\":\"\",\"turnstile_check\":false,\"turnstile_site_key\":\"0x4AAAAAACgP975UcSubdv3v\",\"uptime_kuma_enabled\":true,\"usd_exchange_rate\":7.3,\"user_agreement_enabled\":false,\"version\":\"v0.12.1\",\"wechat_login\":false,\"wechat_qrcode\":\"\"}")));
+    }
+    @GetMapping("/notice")
+    public Mono<R<String>> getNotice() {
+        return R.ok(Mono.just("notice"));
+    }
+
+}
+

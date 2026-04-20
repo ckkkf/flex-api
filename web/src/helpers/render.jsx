@@ -76,6 +76,7 @@ import {
   Server,
   CalendarClock,
 } from 'lucide-react';
+import { FaLinkedinIn } from 'react-icons/fa6';
 import {
   SiAtlassian,
   SiAuth0,
@@ -100,7 +101,6 @@ import {
   SiWechat,
   SiX,
 } from 'react-icons/si';
-import { BsLinkedin } from 'react-icons/bs';
 
 // 获取侧边栏Lucide图标组件
 export function getLucideIcon(key, selected = false) {
@@ -504,7 +504,7 @@ const oauthProviderIconMap = {
   google: SiGoogle,
   discord: SiDiscord,
   facebook: SiFacebook,
-  linkedin: BsLinkedin,
+  linkedin: FaLinkedinIn,
   x: SiX,
   twitter: SiX,
   slack: SiSlack,

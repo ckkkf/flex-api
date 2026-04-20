@@ -1,7 +1,7 @@
 package cc.flexapi.mapper;
-
-
+import cc.flexapi.domain.dto.UsersManagerEditDTO;
 import cc.flexapi.domain.po.Users;
+
 import cn.hutool.core.date.DateTime;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
@@ -39,4 +39,15 @@ public interface ManagementMapper extends BaseMapper<Users> {
 
     @Select("select * from users")
     List<Users> listUser();
+
+
+    @Update("update users set username = #{username} ,display_name = #{displayName} " +
+            ",email = #{email},password = #{password}" +
+            ",quota = #{qupta},role = #{role} ,status = #{status} ")
+    void updateById(UsersManagerEditDTO usersManagerEditDTO);
+
+
+
+    @Select("select * from users")
+    void selectList();
 }

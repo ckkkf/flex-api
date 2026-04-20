@@ -3,6 +3,7 @@ package cc.flexapi.model.response;
 
 import lombok.Data;
 import org.springframework.http.HttpStatus;
+import reactor.core.publisher.Mono;
 
 /**
  *
@@ -16,52 +17,90 @@ public class R<T> {
 
     private Integer code;
 
-    private String msg;
+    private String message;
+
+    private Long timestamp;
+
+    private Boolean success;
 
     private T data;
 
-    public R() {
-    }
-
-    public R(int code, String msg, T data) {
+    private R(int code, String message, T data) {
         this.code = code;
-        this.msg = msg;
+        this.success = code == 200;
+        this.timestamp = System.currentTimeMillis();
+        this.message = message;
         this.data = data;
     }
 
-    public static <T> R<T> error(String msg) {
-        R<T> r = new R<>();
-        r.setCode(500);
-        r.setMsg(msg);
-        return r;
+    /**
+     * 响应式 响应成功
+     *
+     * @param momo 响应数据
+     * @param <T>  响应数据类型
+     * @return 响应式R
+     */
+    public static <T> Mono<R<T>> ok(Mono<T> momo) {
+        if (momo == null) {
+//            return Mono.just(okSync());
+            throw new RuntimeException("响应数据不能为null");
+        }
+        return momo.map(R::okSync);
     }
 
-    public static <T> R<T> error(HttpStatus status, String msg) {
-        R<T> r = new R<>();
-        r.setCode(status.value());
-        r.setMsg(msg);
-        return r;
-    }
-    public static <T> R<T> error(Integer code, String msg) {
-        R<T> r = new R<>();
-        r.setCode(code);
-        r.setMsg(msg);
-        return r;
+    /**
+     * 响应式 响应失败
+     *
+     * @param message 错误信息
+     * @param <T>     响应数据类型
+     * @return 响应式R
+     */
+    public static <T> Mono<R<T>> error(String message) {
+        return Mono.just(errorSync(message));
     }
 
-    public static <T> R<T> ok() {
-        R<T> r = new R<>();
-        r.setCode(200);
-        r.setMsg("操作成功");
-        return r;
+    /**
+     * 响应式 响应失败
+     *
+     * @param code    错误码
+     * @param message 错误信息
+     * @param <T>     响应数据类型
+     * @return 响应式R
+     */
+    public static <T> Mono<R<T>> error(Integer code, String message) {
+        return Mono.just(errorSync(code, message));
     }
 
-    public static <T> R<T> ok(T data) {
-        R<T> r = new R<>();
-        r.setCode(200);
-        r.setMsg("操作成功");
-        r.setData(data);
-        return r;
+    /**
+     * 响应式 响应失败
+     *
+     * @param status  错误码
+     * @param message 错误信息
+     * @param <T>     响应数据类型
+     * @return 响应式R
+     */
+    private static <T> Mono<R<T>> error(HttpStatus status, String message) {
+        return Mono.just(errorSync(status, message));
+    }
+
+    private static <T> R<T> errorSync(String message) {
+        return new R<>(500, message, null);
+    }
+
+    private static <T> R<T> errorSync(HttpStatus status, String message) {
+        return new R<>(status.value(), message, null);
+    }
+
+    private static <T> R<T> errorSync(Integer code, String message) {
+        return new R<>(code, message, null);
+    }
+
+    private static <T> R<T> okSync() {
+        return new R<>(200, "操作成功", null);
+    }
+
+    private static <T> R<T> okSync(T data) {
+        return new R<>(200, "操作成功", data);
     }
 
 }

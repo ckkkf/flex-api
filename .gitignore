@@ -36,3 +36,6 @@ build/
 /src/main/resources/application-dev.yaml
 /src/main/resources/application-prod.yaml
 /src/main/resources/application-test.yaml
+.omx/
+/web/dist/
+/new-api-main/

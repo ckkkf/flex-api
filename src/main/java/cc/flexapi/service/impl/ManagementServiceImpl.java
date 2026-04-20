@@ -4,9 +4,13 @@ import cc.flexapi.domain.dto.UsersManagerDTO;
 import cc.flexapi.domain.dto.UsersManagerEditDTO;
 import cc.flexapi.domain.po.Users;
 import cc.flexapi.mapper.ManagementMapper;
+import cc.flexapi.model.request.UserManageRequest;
+import cc.flexapi.model.response.P;
 import cc.flexapi.service.ManagementService;
 import cn.hutool.core.date.DateTime;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -134,28 +139,6 @@ public class ManagementServiceImpl extends ServiceImpl<ManagementMapper, Users> 
 
 
 
-    @Override
-    public Flux<Users> search(String query) {
-        return Flux.defer(() -> {
-            LambdaQueryWrapper<Users> wrapper = new LambdaQueryWrapper<>();
-
-            // 使用正则判断是否为纯数字 (ID)
-            if (query.matches("^\\d+$")) {
-                wrapper.eq(Users::getId, Integer.parseInt(query));
-            }
-            // 判断是否为邮箱格式
-            else if (query.contains("@")) {
-                wrapper.eq(Users::getEmail, query);
-            }
-            // 默认作为用户名或昵称模糊查询
-            else {
-                wrapper.and(i -> i.like(Users::getUsername, query)
-                        .or().like(Users::getDisplayName, query));
-            }
-
-            return Flux.fromIterable(this.baseMapper.selectList(wrapper));
-        }).subscribeOn(Schedulers.boundedElastic());
-    }
 
     @Override
     public Flux<List<Users>> listUser() {
@@ -164,6 +147,88 @@ public class ManagementServiceImpl extends ServiceImpl<ManagementMapper, Users> 
 
         return Flux.just(users);
     }
+
+    /**
+     * 更新用户信息
+     * 升降职位 禁用启用
+     * @param userManageRequest
+     */
+    @Override
+    public void updateUser(UserManageRequest userManageRequest) {
+
+
+        Users users = managementMapper.selectById(userManageRequest.getId());
+        if (users == null){
+            throw new RuntimeException("用户不存在");
+        }
+        switch (userManageRequest.getAction()) {
+            case "promote":
+                managementMapper.promoteById(userManageRequest.getId());
+                break;
+            case "demote":
+                managementMapper.demoteById(userManageRequest.getId());
+                break;
+            case "disable":
+                managementMapper.disableUser(userManageRequest.getId());
+                break;
+            case "enable":
+                managementMapper.enableUser(userManageRequest.getId());
+                break;
+        }
+
+    }
+
+    @Override
+    public void edit(UsersManagerEditDTO usersManagerEditDTO) {
+        managementMapper.updateById(usersManagerEditDTO);
+    }
+
+    @Override
+    public Flux<P<Users>> findAll() {
+        managementMapper.selectList();
+        return null;
+    }
+
+
+
+
+    // ... existing code ...
+
+
+    public Flux<P<Users>> search(String query, Integer p, Integer pageSize) {
+        // 1. Handle defaults
+        int current = (p == null || p < 1) ? 1 : p;
+        int size = (pageSize == null || pageSize < 1) ? 20 : pageSize;
+
+        return Mono.fromCallable(() -> {
+                    LambdaQueryWrapper<Users> wrapper = new LambdaQueryWrapper<>();
+
+                    // 2. Build Query Logic
+                    if (query != null && query.matches("^\\d+$")) {
+                        wrapper.eq(Users::getId, Integer.parseInt(query));
+                    } else if (query != null && query.contains("@")) {
+                        wrapper.eq(Users::getEmail, query);
+                    } else if (query != null) {
+                        wrapper.and(i -> i.like(Users::getUsername, query)
+                                .or().like(Users::getDisplayName, query));
+                    }
+
+                    // 3. Use MyBatis-Plus Page object
+                    Page<Users> pageParam = new Page<>(current, size);
+                    IPage<Users> result = managementMapper.selectPage(pageParam, wrapper);
+
+                    // 4. Map to your custom P wrapper
+                    return P.of(result.getRecords(),
+                            result.getTotal(),
+                            (int) result.getCurrent(),
+                            (int) result.getSize());
+                })
+                .subscribeOn(Schedulers.boundedElastic()) // Vital for JDBC/Blocking IO
+                .flux();
+    }
+
+// ... existing code ...
+
 
 
 }
