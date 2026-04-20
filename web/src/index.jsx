@@ -20,6 +20,7 @@ For commercial licensing, please contact support@quantumnous.com
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import '../node_modules/@douyinfe/semi-ui/dist/css/semi.css';
 import { UserProvider } from './context/User';
 import 'react-toastify/dist/ReactToastify.css';
 import { StatusProvider } from './context/Status';
@@ -38,7 +39,7 @@ if (typeof window !== 'undefined') {
   console.log(
     '%cWE ❤ NEWAPI%c Github: https://github.com/QuantumNous/new-api',
     'color: #10b981; font-weight: bold; font-size: 24px;',
-    'color: inherit; font-size: 14px;',9 
+    'color: inherit; font-size: 14px;',
   );
 }
 
