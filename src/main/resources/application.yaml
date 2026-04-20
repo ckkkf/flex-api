@@ -39,3 +39,6 @@ sa-token:
   # 是否输出操作日志
   is-log: true
 
+logging:
+  level:
+    cc.flexapi: debug

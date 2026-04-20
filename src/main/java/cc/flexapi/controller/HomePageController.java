@@ -1,4 +1,4 @@
-package cc.flexapi.controller.homePage;
+package cc.flexapi.controller;
 
 import cc.flexapi.model.response.R;
 import cn.hutool.json.JSONObject;

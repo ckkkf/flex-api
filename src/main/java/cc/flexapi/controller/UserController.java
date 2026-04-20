@@ -1,4 +1,4 @@
-package cc.flexapi.controller.auth;
+package cc.flexapi.controller;
 
 import cc.flexapi.model.request.LoginRequest;
 import cc.flexapi.model.response.R;

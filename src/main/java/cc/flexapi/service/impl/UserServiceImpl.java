@@ -4,6 +4,7 @@ import cc.flexapi.model.request.LoginRequest;
 import cc.flexapi.model.vo.LoginVO;
 import cc.flexapi.service.UserService;
 import cn.dev33.satoken.stp.StpUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -13,13 +14,19 @@ import reactor.core.publisher.Mono;
  * @desc ription
  * @since 2026-04-17 23:11
  */
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
-    public Mono<LoginVO> login(String turnstile, LoginRequest request) {
-        // TODO 支持turnstile
-//        StpUtil.login();
 
+    public Mono<LoginVO> login(String turnstile, LoginRequest request) {
+        // TODO 校验turnstile
+
+        // 查询用户名
+
+        // 比对密码
+
+        // 调用satoken登陆
 
         return null;
     }
