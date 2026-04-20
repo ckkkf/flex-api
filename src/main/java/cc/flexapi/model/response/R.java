@@ -41,6 +41,10 @@ public class R<T> {
      * @return 响应式R
      */
     public static <T> Mono<R<T>> ok(Mono<T> momo) {
+        if (momo == null) {
+//            return Mono.just(okSync());
+            throw new RuntimeException("响应数据不能为null");
+        }
         return momo.map(R::okSync);
     }
 

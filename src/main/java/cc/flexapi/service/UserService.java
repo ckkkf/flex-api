@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
  * @desc ription
  * @since 2026-04-17 23:11
  */
-public interface AuthService {
+public interface UserService {
 
     Mono<LoginVO> login(String turnstile, LoginRequest request);
 
