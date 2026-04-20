@@ -17,16 +17,19 @@ public class R<T> {
 
     private Integer code;
 
-    private String msg;
+    private String message;
+
+    private Long timestamp;
+
+    private Boolean success;
 
     private T data;
 
-    private R() {
-    }
-
-    private R(int code, String msg, T data) {
+    private R(int code, String message, T data) {
         this.code = code;
-        this.msg = msg;
+        this.success = code == 200;
+        this.timestamp = System.currentTimeMillis();
+        this.message = message;
         this.data = data;
     }
 
@@ -44,72 +47,56 @@ public class R<T> {
     /**
      * 响应式 响应失败
      *
-     * @param msg 错误信息
-     * @param <T> 响应数据类型
+     * @param message 错误信息
+     * @param <T>     响应数据类型
      * @return 响应式R
      */
-    public static <T> Mono<R<T>> error(String msg) {
-        return Mono.just(errorSync(msg));
+    public static <T> Mono<R<T>> error(String message) {
+        return Mono.just(errorSync(message));
     }
 
     /**
      * 响应式 响应失败
      *
-     * @param code 错误码
-     * @param msg  错误信息
-     * @param <T>  响应数据类型
+     * @param code    错误码
+     * @param message 错误信息
+     * @param <T>     响应数据类型
      * @return 响应式R
      */
-    public static <T> Mono<R<T>> error(Integer code, String msg) {
-        return Mono.just(errorSync(code, msg));
+    public static <T> Mono<R<T>> error(Integer code, String message) {
+        return Mono.just(errorSync(code, message));
     }
 
     /**
      * 响应式 响应失败
      *
-     * @param status 错误码
-     * @param msg    错误信息
-     * @param <T>    响应数据类型
+     * @param status  错误码
+     * @param message 错误信息
+     * @param <T>     响应数据类型
      * @return 响应式R
      */
-    private static <T> Mono<R<T>> error(HttpStatus status, String msg) {
-        return Mono.just(errorSync(status, msg));
+    private static <T> Mono<R<T>> error(HttpStatus status, String message) {
+        return Mono.just(errorSync(status, message));
     }
 
-    private static <T> R<T> errorSync(String msg) {
-        R<T> r = new R<>();
-        r.setCode(500);
-        r.setMsg(msg);
-        return r;
+    private static <T> R<T> errorSync(String message) {
+        return new R<>(500, message, null);
     }
 
-    private static <T> R<T> errorSync(HttpStatus status, String msg) {
-        R<T> r = new R<>();
-        r.setCode(status.value());
-        r.setMsg(msg);
-        return r;
+    private static <T> R<T> errorSync(HttpStatus status, String message) {
+        return new R<>(status.value(), message, null);
     }
 
-    private static <T> R<T> errorSync(Integer code, String msg) {
-        R<T> r = new R<>();
-        r.setCode(code);
-        r.setMsg(msg);
-        return r;
+    private static <T> R<T> errorSync(Integer code, String message) {
+        return new R<>(code, message, null);
     }
 
     private static <T> R<T> okSync() {
-        R<T> r = new R<>();
-        r.setCode(200);
-        r.setMsg("操作成功");
-        return r;
+        return new R<>(200, "操作成功", null);
     }
 
     private static <T> R<T> okSync(T data) {
-        R<T> r = new R<>();
-        r.setCode(200);
-        r.setMsg("操作成功");
-        r.setData(data);
-        return r;
+        return new R<>(200, "操作成功", data);
     }
 
 }

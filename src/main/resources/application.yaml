@@ -6,6 +6,8 @@ spring:
     name: flex-api
   profiles:
     active: dev
+  webflux:
+    base-path: /api
   ### r2dbc
   r2dbc:
     url: r2dbc:postgresql://${flexapi.datasource.host}:${flexapi.datasource.port}/${flexapi.datasource.database}
