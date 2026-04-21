@@ -3,6 +3,7 @@ package cc.flexapi.model.request;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * @author ckkk
@@ -11,6 +12,7 @@ import lombok.Data;
  * @since 2026-04-18 11:08
  */
 @Data
+@Accessors(chain = true)
 public class LoginRequest {
 
     /**
