@@ -5,16 +5,13 @@ import cc.flexapi.domain.dto.UsersManagerEditDTO;
 import cc.flexapi.domain.po.Users;
 import cc.flexapi.model.request.UserManageRequest;
 import cc.flexapi.model.response.P;
-import com.baomidou.mybatisplus.extension.service.IService;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.util.List;
 
 /**
  * 用户管理服务接口 - 响应式版本
  */
-public interface ManagementService extends IService<Users> {
+public interface ManagementService{
 
     // 返回 Mono<Void> 表示异步任务执行完成，不返回具体数据
     Mono<Void> addUser(UsersManagerDTO usersManagerDTO);
@@ -39,13 +36,14 @@ public interface ManagementService extends IService<Users> {
     
 
 
-    Flux<List<Users>> listUser();
 
     void updateUser(UserManageRequest userManageRequest);
 
     void edit(UsersManagerEditDTO usersManagerEditDTO);
 
-    Flux<P<Users>> findAll();
+    Flux<Users> findAll();
 
-    Flux<P<Users>> search(String query, Integer p, Integer pageSize);
+    Mono<P<Users>> search(String query, Integer p, Integer pageSize);
+
+    void removeById(Integer id);
 }

@@ -1,7 +1,6 @@
 package cc.flexapi.domain.po;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -69,7 +68,7 @@ public class Users implements Serializable {
     private Integer requestCount;
 
     @Schema(description = "分组")
-    @TableField("\"group\"")
+
     public String user_group;
 
 

@@ -1,7 +1,7 @@
 package cc.flexapi.domain.dto;
 
 
-import com.baomidou.mybatisplus.annotation.TableField;
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 

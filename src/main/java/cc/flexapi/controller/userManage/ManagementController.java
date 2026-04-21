@@ -18,7 +18,7 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/user")
 @Tag(name = "用户管理接口")
 @Slf4j
 public class ManagementController {
@@ -39,23 +39,21 @@ public class ManagementController {
         return managementService.findById(id);
     }
 
-    // 获取所有用户，返回Flux
-    @GetMapping()
-    public Flux<P<Users>> getUsers() {
-        return managementService.findAll();
-    }
+
 
 
 
 
 
     @Operation(summary = "添加用户")
-    @PostMapping()
+    @PostMapping
     public Mono<R<Void>> addUser(@RequestBody UsersManagerDTO usersManagerDTO) {
+        // TODO：你再确定确定相应是不是Void，继续吧
+        Mono<Void> voidMono = managementService.addUser(usersManagerDTO);
 
         log.debug("添加用户成功");
 
-        return R.ok(Mono.just("success").then());
+        return R.ok(voidMono);
     }
 
     @Operation(summary = "硬删除用户")
@@ -71,7 +69,7 @@ public class ManagementController {
 
     @Operation(summary = "搜索用户")
     @GetMapping("/search")
-    public Flux<P<Users>> searchUser(@RequestBody String query, Integer p, Integer pageSize) {
+    public Mono<P<Users>> searchUser(@RequestBody String query, Integer p, Integer pageSize) {
         log.debug("搜索用户成功");
         return managementService.search(query,p,pageSize);
 
@@ -93,6 +91,12 @@ public class ManagementController {
         return R.ok(Mono.just("success").then());
     }
 
+    @Operation(summary = "用户列表")
+    @GetMapping()
+    public Flux<Users> listUser() {
+        log.debug("获取用户列表成功");
+        return managementService.findAll();
+    }
 
 
 
