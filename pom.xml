@@ -31,7 +31,6 @@
         <java.version>26</java.version>
         <spring-boot.version>4.0.5</spring-boot.version>
         <sa-token.version>1.45.0</sa-token.version>
-        <mybatis-plus.version>3.5.16</mybatis-plus.version>
         <hutool.version>5.8.25</hutool.version>
         <openapi.version>2.5.0</openapi.version>
     </properties>
@@ -50,23 +49,18 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
+        <!-- PostgreSQL R2DBC 驱动 -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>r2dbc-postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
 
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>${hutool.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
-            <version>${openapi.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-
 
 
         <!-- Source: https://mvnrepository.com/artifact/org.postgresql/postgresql -->
@@ -76,21 +70,33 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-r2dbc</artifactId>
+        </dependency>
+        <!-- lombok -->
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
         <!-- Sa-Token 权限认证，在线文档：https://sa-token.cc -->
+
         <dependency>
             <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-spring-boot4-starter</artifactId>
+            <artifactId>sa-token-reactor-spring-boot4-starter</artifactId>
             <version>${sa-token.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-spring-boot4-starter</artifactId>
-            <version>${mybatis-plus.version}</version>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webflux-api</artifactId>
+            <version>${openapi.version}</version>
         </dependency>
+
+
+
+
+
+
     </dependencies>
 
     <build>
