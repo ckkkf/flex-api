@@ -1,15 +1,24 @@
 package cc.flexapi.config;
 
-import cn.dev33.satoken.SaManager;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import cn.dev33.satoken.reactor.filter.SaReactorFilter;
+import cn.dev33.satoken.util.SaResult;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@SpringBootApplication
+@Configuration
 public class SaTokenConfig {
-    public static void main(String[] args) throws JsonProcessingException {
-        SpringApplication.run(SaTokenConfig.class, args);
-        System.out.println("启动成功，Sa-Token 配置如下：" + SaManager.getConfig());
+
+    @Bean
+    public SaReactorFilter getSaReactorFilter() {
+        return new SaReactorFilter()
+                // 放行所有请求 = 完全不做任何权限控制
+                .addInclude("/**")
+                .addExclude("/**")
+
+                // 空校验 = 不做登录/权限检查
+                .setAuth(obj -> {})
+
+                // 异常处理保留，不影响测试
+                .setError(e -> SaResult.error("Sa-Token 拦截：" + e.getMessage()));
     }
 }
-
