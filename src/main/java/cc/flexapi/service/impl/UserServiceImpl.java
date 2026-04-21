@@ -3,8 +3,9 @@ package cc.flexapi.service.impl;
 import cc.flexapi.model.request.LoginRequest;
 import cc.flexapi.model.vo.LoginVO;
 import cc.flexapi.service.UserService;
-import cn.dev33.satoken.stp.StpUtil;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -18,11 +19,13 @@ import reactor.core.publisher.Mono;
 @Service
 public class UserServiceImpl implements UserService {
 
+    @Resource
+    private R2dbcEntityTemplate template;
 
     public Mono<LoginVO> login(String turnstile, LoginRequest request) {
         // TODO 校验turnstile
 
-        // 查询用户名
+        // 查询用户
 
         // 比对密码
 
