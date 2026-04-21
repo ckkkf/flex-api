@@ -1,7 +1,0 @@
-flexapi:
-  datasource:
-    host: localhost
-    port: 5432
-    database: flex_api
-    username: postgres
-    password: 123456
