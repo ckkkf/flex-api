@@ -5,9 +5,6 @@ import lombok.Data;
 
 @Data
 public class UsersManagerDTO {
-
-
-
     private Integer id;
 
     private String username;

@@ -1,8 +1,6 @@
 package cc.flexapi.exception;
 
 import cc.flexapi.constants.CommonError;
-import cc.flexapi.model.response.R;
-import reactor.core.publisher.Mono;
 
 /**
  * @author ckkk
@@ -14,17 +12,15 @@ public class BusinessException extends RuntimeException {
 
     private String message;
 
-
     public BusinessException(String message) {
         super(message);
-        this.message = message;
     }
 
-    public static <T> Mono<R<T>> cast(String message) {
+    private static void cast(String message) {
         throw new BusinessException(message);
     }
 
-    public static void cast(CommonError error){
+    private static void cast(CommonError error) {
         throw new BusinessException(error.getErrorMessage());
     }
 }
