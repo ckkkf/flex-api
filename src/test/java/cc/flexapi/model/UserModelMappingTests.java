@@ -1,9 +1,9 @@
 package cc.flexapi.model;
 
-import cc.flexapi.model.dto.UserDTO;
+import cc.flexapi.model.dto.UserDto;
 import cc.flexapi.model.mapper.ModelMapper;
-import cc.flexapi.model.po.UserPO;
-import cc.flexapi.model.vo.LoginVO;
+import cc.flexapi.model.po.UserPo;
+import cc.flexapi.model.vo.LoginVo;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,7 +18,7 @@ class UserModelMappingTests {
 
     @Test
     void shouldMapUserPoToLoginVo() {
-        UserPO userPO = new UserPO();
+        UserPo userPO = new UserPo();
         userPO.setId(1);
         userPO.setUsername("flex-user");
         userPO.setPassword("hashed-password");
@@ -28,8 +28,8 @@ class UserModelMappingTests {
         userPO.setEmail("flex@example.com");
         userPO.setGroup("default");
 
-        UserDTO userDTO = ModelMapper.toDto(userPO, UserDTO.class);
-        LoginVO loginVO = ModelMapper.toLoginVo(userDTO);
+        UserDto userDTO = ModelMapper.toDto(userPO, UserDto.class);
+        LoginVo loginVO = ModelMapper.toVo(userDTO, LoginVo.class);
 
         assertEquals(1, loginVO.getId());
         assertEquals("flex-user", loginVO.getUsername());
@@ -41,10 +41,10 @@ class UserModelMappingTests {
 
     @Test
     void shouldFallbackDisplayNameToUsername() {
-        UserPO userPO = new UserPO();
+        UserPo userPO = new UserPo();
         userPO.setUsername("fallback-user");
 
-        UserDTO userDTO = ModelMapper.toDto(userPO, UserDTO.class);
+        UserDto userDTO = ModelMapper.toDto(userPO, UserDto.class);
 
         assertEquals("fallback-user", userDTO.getDisplayName());
     }
