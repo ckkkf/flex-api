@@ -7,6 +7,7 @@ import cc.flexapi.model.request.LoginRequest;
 import cc.flexapi.model.request.UserManageRequest;
 import cc.flexapi.model.response.P;
 import cc.flexapi.model.vo.LoginVo;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 /**
@@ -116,4 +117,11 @@ public interface UserService {
      */
     Mono<LoginVo> login(String turnstile, LoginRequest request);
 
+    /**
+     * 获取用户列表
+     *
+     * @return 用户列表
+     */
+
+    Flux<Users> listUser(Integer p, Integer pageSize);
 }

@@ -3,6 +3,8 @@ package cc.flexapi.domain.po;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
 import java.io.Serializable;
 
@@ -69,6 +71,7 @@ public class Users implements Serializable {
 
     @Schema(description = "分组")
 
+    @Column("group")
     public String user_group;
 
 

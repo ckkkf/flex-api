@@ -55,9 +55,9 @@ public class UserController {
      * @return 用户信息
      */
     @GetMapping("/{id}")
-    public Mono<Users> getUserById(@PathVariable String id) {
+    public Mono<R<Users>> getUserById(@PathVariable String id) {
         log.debug("【用户管理服务接口】根据ID查询用户。id: {}", id);
-        return userService.findById(id);
+        return R.ok(userService.findById(id));
     }
 
     /**
@@ -67,7 +67,7 @@ public class UserController {
      * @return void
      */
     @Operation(summary = "添加用户")
-    @PostMapping
+    @PostMapping()
     public Mono<R<Void>> addUser(@RequestBody UsersManagerDTO usersManagerDTO) {
         log.debug("【用户管理服务接口】添加用户。username: {}, displayName: {}", usersManagerDTO.getUsername(), usersManagerDTO.getDisplayName());
         return R.ok(userService.addUser(usersManagerDTO));
@@ -83,7 +83,7 @@ public class UserController {
     @DeleteMapping("/delete")
     public Mono<R<Void>> deleteUser(@RequestBody Integer id) {
         log.debug("【用户管理服务接口】硬删除用户。id: {}", id);
-        return R.ok( userService.removeById(id));
+        return R.ok(userService.removeById(id));
     }
 
     /**
@@ -96,10 +96,14 @@ public class UserController {
      */
     @Operation(summary = "搜索用户")
     @GetMapping("/search")
-    public Mono<P<Users>> searchUser(@RequestBody String query, Integer p, Integer pageSize) {
+    public Mono<P<Users>> searchUser(
+            @RequestParam String query, // 将 @RequestBody 改为 @RequestParam
+            @RequestParam(defaultValue = "1") Integer p,
+            @RequestParam(defaultValue = "10") Integer pageSize) {
         log.debug("【用户管理服务接口】搜索用户。query: {}, p: {}, pageSize: {}", query, p, pageSize);
         return userService.search(query, p, pageSize);
     }
+
 
     /**
      * 更新用户信息
@@ -114,17 +118,20 @@ public class UserController {
         return R.ok(userService.editUser(usersManagerEditDTO));
     }
 
-    /**
-     * 获取用户列表
-     *
-     * @return 用户列表
-     */
+
+
+    // 移除第 123 到 134 行的所有重复 mapping，替换为以下单个方法：
+
     @Operation(summary = "用户列表")
     @GetMapping
-    public Flux<Users> listUser() {
-        log.debug("【用户管理服务接口】获取用户列表。该接口禁止直接获取全部用户数据");
-        throw new RuntimeException("禁止直接获取所有用户，请改为分页");
+    public Flux<Users> listUser(
+            @RequestParam(value = "p", defaultValue = "1") Integer p,
+            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+
+        log.debug("【用户管理服务接口】获取用户列表。p: {}, pageSize: {}", p, pageSize);
+        return userService.listUser(p, pageSize);
     }
+
 
     /**
      * 更新用户信息

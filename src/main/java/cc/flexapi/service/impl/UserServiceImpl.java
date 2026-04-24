@@ -24,7 +24,10 @@ import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.data.relational.core.query.Query;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.time.LocalDateTime;
 
 import java.util.Arrays;
 import java.util.List;
@@ -81,6 +84,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Flux<Users> listUser(Integer p, Integer pageSize) {
+
+        return userMapper.selectList();
+
+    }
+
+    @Override
     public Mono<Void> addUser(UsersManagerDTO usersManagerDTO) {
         if (usersManagerDTO.getUsername() == null) {
             return Mono.error(new BusinessException("用户名不能为空"));
@@ -110,7 +120,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Mono<Void> deleteById(Integer id) {
-        return null;
+        LocalDateTime now = LocalDateTime.now();
+        return userMapper.deleteById(id, now).then();
     }
 
     @Override
@@ -253,13 +264,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Mono<Void> removeById(Integer id) {
-        // Since ReactiveCrudRepository provides Mono<Void> deleteById(ID id),
-        // we can cast to our domain if needed, but our custom mapper returns
-        // Mono<Integer>.
-        // However, there is no generic parameter-less deleteById on userMapper except
-        // the inherited one that returns Mono<Void>.
-        // Looking at the older version it was deleting directly via inherited
-        // deleteById(id)
+
         return userMapper.deleteById(id);
     }
 }
