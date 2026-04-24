@@ -26,6 +26,8 @@ import org.springframework.data.relational.core.query.Query;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDateTime;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -110,7 +112,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Mono<Void> deleteById(Integer id) {
-        return null;
+        LocalDateTime now = LocalDateTime.now();
+        return userMapper.deleteById(id, now).then();
     }
 
     @Override
