@@ -1,5 +1,6 @@
 package cc.flexapi.service.impl;
 
+import cc.flexapi.model.vo.LoginVo;
 import cc.flexapi.service.TurnstileService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

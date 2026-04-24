@@ -30,12 +30,12 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- * 服务层实现类
- *
  * @author xiaoyi、ckkk
  * @version 1.0
+ * @description
  * @since 2026-04-18 14:10
  */
 @Slf4j
@@ -82,22 +82,16 @@ public class UserServiceImpl implements UserService {
                 });
     }
 
-    /**
-     * 添加用户
-     *
-     * @param usersManagerDTO 用户信息
-     * @return Mono<Void>
-     */
     @Override
     public Mono<Void> addUser(UsersManagerDTO usersManagerDTO) {
-        // 校验参数
+
         if (usersManagerDTO.getUsername() == null) {
-            return Mono.error(new BusinessException("用户名不能为空"));
+            throw new RuntimeException("用户名不能为空");
         }
         if (usersManagerDTO.getPassword() == null) {
-            return Mono.error(new BusinessException("密码不能为空"));
+            throw new RuntimeException("密码不能为空");
         }
-        // 复制属性
+        // 在  中
         Users users = new Users();
         BeanUtils.copyProperties(usersManagerDTO, users);
         users.setRole(2);
@@ -106,162 +100,134 @@ public class UserServiceImpl implements UserService {
         users.setUsedQuota(0);
         users.setRequestCount(0);
         users.setUser_group("default");
-        // 插入用户
-        return userMapper.insertUser(users.getUsername(), users.getDisplayName(),
-                users.getEmail(), users.getPassword(), users.getQuota(), users.getRole(),
-                users.getStatus()).doOnSuccess(_ -> log.info("添加用户成功: {}", users.getUsername()));
+        Mono<Void> insertUser = userMapper.insertUser(users.getUsername(), users.getPassword(),
+                users.getDisplayName(), users.getRemark(), users.getQuota(), users.getRole(),
+                users.getStatus());
+        return Mono.empty().then(insertUser);
     }
 
-    /**
-     * 删除用户
-     *
-     * @param id 用户ID
-     * @return Mono<Void>
-     */
     @Override
     public Mono<Void> deleteById(Integer id) {
-        // 校验参数
-        if (id == null) {
-            return Mono.error(new BusinessException("用户ID不能为空"));
-        }
         LocalDateTime now = LocalDateTime.now();
-        log.info("删除用户: {}", id);
-        return userMapper.deleteById(id, now).then();
+        userMapper.deleteById(id, now);
+        return Mono.empty();
     }
 
-    /**
-     * 禁用用户
-     *
-     * @param id 用户ID
-     * @return Mono<Void>
-     */
     @Override
-    public Mono<Void> disableUser(Integer id) {
-        return userMapper.disableUser(id).then();
+    public Mono disableUser(Integer id) {
+        userMapper.disableUser(id);
+        return Mono.empty();
     }
 
-    /**
-     * 启用用户
-     *
-     * @param id 用户ID
-     * @return Mono<Void>
-     */
+
     @Override
     public Mono<Void> enableUser(Integer id) {
-        return userMapper.enableUser(id).then();
+        userMapper.enableUser(id);
+        return Mono.empty();
     }
 
-    /**
-     * 提升用户权限
-     *
-     * @param id 用户ID
-     * @return Mono<Void>
-     */
     @Override
     public Mono<Void> promoteById(Integer id) {
-        return userMapper.getUsersById(id)
-                .switchIfEmpty(Mono.error(new BusinessException("用户不存在")))
-                .flatMap(users -> {
-                    if (users.getRole() == 1) {
-                        return Mono.error(new BusinessException("已经是管理员"));
-                    }
-                    return userMapper.promoteById(id).then();
-                });
+        Users users = userMapper.getUsersById(id);
+        if (users.getRole() == 1) {
+            throw new RuntimeException("已经是管理员");
+        }
+
+        if (users == null) {
+            throw new RuntimeException("用户不存在");
+        }
+
+        userMapper.promoteById(id);
+        return Mono.empty();
     }
 
-    /**
-     * 降级用户权限
-     *
-     * @param id 用户ID
-     * @return Mono<Void>
-     */
     @Override
     public Mono<Void> demoteById(Integer id) {
-        return userMapper.getUsersById(id)
-                .switchIfEmpty(Mono.error(new BusinessException("用户不存在")))
-                .flatMap(users -> {
-                    if (users.getRole() == 2) {
-                        return Mono.error(new BusinessException("已经是普通用户"));
-                    }
-                    return userMapper.demoteById(id).then();
-                });
+        Users users = userMapper.getUsersById(id);
+        if (users.getRole() == 2) {
+            throw new RuntimeException("已经是普通用户");
+        }
+        if (users == null) {
+            throw new RuntimeException("用户不存在");
+        }
+        userMapper.demoteById(id);
+        return Mono.empty();
     }
 
-    /**
-     * 编辑个人用户信息
-     *
-     * @param usersManagerEditDTO 用户编辑信息
-     * @return Mono<Void>
-     */
     @Override
     public Mono<Void> editUser(UsersManagerEditDTO usersManagerEditDTO) {
-        return userMapper.getUsersById(usersManagerEditDTO.getId())
-                .switchIfEmpty(Mono.error(new BusinessException("用户不存在")))
-                .flatMap(users -> {
-                    if (users.getUsername() != null && users.getPassword() != null) {
-                        if (users.getUsername().equals(usersManagerEditDTO.getUsername())
-                                && users.getPassword().equals(usersManagerEditDTO.getPassword())) {
-                            return Mono.error(new BusinessException("密码重复"));
-                        }
-                        if (users.getUsername().equals(usersManagerEditDTO.getUsername())) {
-                            return Mono.error(new BusinessException("用户名已存在"));
-                        }
-                    }
 
-                    Users users1 = new Users();
-                    BeanUtils.copyProperties(usersManagerEditDTO, users1);
-                    // 编辑用户信息
-                    return userMapper.updateUserInfo(users1.getId(), users1.getUsername(), users1.getPassword(), users1.getDisplayName(),
-                            users1.getRemark(), users1.getQuota(), users1.getRole(), users1.getStatus()).then();
-                });
+        Users users = userMapper.getUsersById(usersManagerEditDTO.getId());
+        if (users != null && users.getUsername() != null && users.getPassword() != null) {
+            if (users.getUsername().equals(usersManagerEditDTO.getUsername()) && users.getPassword().equals(usersManagerEditDTO.getPassword())) {
+                throw new RuntimeException("密码重复");
+
+            }
+            if (users.getUsername().equals(usersManagerEditDTO.getUsername())) {
+                throw new RuntimeException("用户名已存在");
+            }
+        }
+
+        Users users1 = new Users();
+        BeanUtils.copyProperties(usersManagerEditDTO, users1);
+        userMapper.updateUserInfo(users1.getId(), users1.getUsername(), users1.getPassword(), users1.getDisplayName(), users1.getRemark(), users1.getQuota(), users1.getRole(), users1.getStatus());
+        return Mono.empty();
     }
 
-    /**
-     * 根据ID查询用户
-     *
-     * @param id 用户ID
-     * @return Mono<Users>
-     */
+
     @Override
     public Mono<Users> findById(String id) {
-        // 根据id查询用户信息
-        return userMapper.getUsersById(Integer.parseInt(id));
+        return Mono.just(userMapper.getUsersById(Integer.parseInt(id)));
     }
+
 
     /**
      * 更新用户信息
      * 升降职位 禁用启用
      *
-     * @param userManageRequest 用户管理请求参数
-     * @return Mono<Void>
+     * @param userManageRequest
+     * @return
      */
     @Override
     public Mono<Void> updateUser(UserManageRequest userManageRequest) {
-        return userMapper.getUsersById(userManageRequest.getId())
-                .switchIfEmpty(Mono.error(new BusinessException("用户不存在")))
-                .flatMap(_ -> switch (userManageRequest.getAction()) {
-                    case "promote" -> this.promoteById(userManageRequest.getId());
-                    case "demote" -> this.demoteById(userManageRequest.getId());
-                    case "disable" -> this.disableUser(userManageRequest.getId());
-                    case "enable" -> this.enableUser(userManageRequest.getId());
-                    case "delete" -> this.deleteById(userManageRequest.getId());
-                    default -> Mono.empty();
-                });
+
+
+        Users users = userMapper.getUsersById(userManageRequest.getId());
+        if (users == null) {
+            throw new RuntimeException("用户不存在");
+        }
+        switch (userManageRequest.getAction()) {
+            case "promote":
+                userMapper.promoteById(userManageRequest.getId());
+                break;
+            case "demote":
+                userMapper.demoteById(userManageRequest.getId());
+                break;
+            case "disable":
+                userMapper.disableUser(userManageRequest.getId());
+                break;
+            case "enable":
+                userMapper.enableUser(userManageRequest.getId());
+                break;
+        }
+
+        return null;
+    }
+
+    @Override
+    public Mono<Void> edit(UsersManagerEditDTO usersManagerEditDTO) {
+        Mono<Integer> integerMono = userMapper.updateUserInfo(usersManagerEditDTO.getId(), usersManagerEditDTO.getUsername(), usersManagerEditDTO.getPassword(), usersManagerEditDTO.getDisplayName(), usersManagerEditDTO.getEmail(), Math.toIntExact(usersManagerEditDTO.getQuota()), usersManagerEditDTO.getRole(), usersManagerEditDTO.getStatus());
+        return null;
+    }
+
+    @Override
+    public Flux<Users> findAll() {
+        Flux<Users> users = userMapper.selectList();
+
+        return users;
     }
 
 
-
-
-
-    /**
-     * 搜索用户
-     *
-     * @param query    搜索关键字
-     * @param p        页码
-     * @param pageSize 每页包含记录数量
-     * @return Mono<P<Users>> 包含查询结果分页信息的Mono
-     */
-    @Override
     public Mono<P<Users>> search(String query, Integer p, Integer pageSize) {
         // 1. 参数规范化
         int pageNo = Math.max(1, (p == null) ? 1 : p);
@@ -276,7 +242,7 @@ public class UserServiceImpl implements UserService {
             // 使用正则 \\s+ 可以匹配空格、制表符等
             List<String> keywords = Arrays.stream(query.trim().split("\\s+"))
                     .filter(s -> !s.isEmpty())
-                    .toList();
+                    .collect(Collectors.toList());
 
             for (String word : keywords) {
                 // 4. 针对每个关键词构建“子条件”
@@ -291,7 +257,8 @@ public class UserServiceImpl implements UserService {
                     String pattern = "%" + word + "%";
                     criteria = criteria.and(
                             Criteria.where("username").like(pattern)
-                                    .or("display_name").like(pattern));
+                                    .or("display_name").like(pattern)
+                    );
                 }
             }
         }
@@ -312,35 +279,18 @@ public class UserServiceImpl implements UserService {
         // 7. 使用 zip 合并结果并封装进 P 对象
         return Mono.zip(dataMono, totalMono)
                 .map(tuple -> P.of(
-                        tuple.getT1(), // 数据列表
-                        tuple.getT2(), // 总数
-                         pageNo,
-                         size));
+                        tuple.getT1(),  // 数据列表
+                        tuple.getT2(),  // 总数
+                        (long) pageNo,
+                        (long) size
+                ));
     }
 
-    /**
-     * 硬删除用户
-     *
-     * @param id 用户ID
-     * @return Mono<Void>
-     */
     @Override
-    public Mono<Void> deleteUser(Integer id) {
-        // 硬删除用户
-        return userMapper.deleteUser(id).then();
-    }
+    public Mono<Void> removeById(Integer id) {
 
-    /**
-     * 获取用户列表
-     *
-     * @param p        页码
-     * @param pageSize 每页包含记录数量
-     * @return Flux<Users>
-     */
-    @Override
-    public Flux<Users> list(Integer p, Integer pageSize) {
-        // 获取用户列表
-        return userMapper.selectList(p, pageSize);
+        userMapper.deleteById(id);
+        return null;
     }
 
 }
