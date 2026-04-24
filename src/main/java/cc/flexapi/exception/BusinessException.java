@@ -5,7 +5,7 @@ import cc.flexapi.constants.CommonError;
 /**
  * @author ckkk
  * @version 1.0
- * @description 业务异常
+ * 业务异常
  * @since 2026-04-20 18:51
  */
 public class BusinessException extends RuntimeException {

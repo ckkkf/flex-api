@@ -6,7 +6,7 @@ import lombok.Data;
 /**
  * @author ckkk
  * @version 1.0
- * @description subscription_orders 表视图对象
+ * subscription_orders 表视图对象
  * @since 2026-04-21 19:00
  */
 @Data

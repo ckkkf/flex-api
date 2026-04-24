@@ -6,7 +6,7 @@ import lombok.Data;
 /**
  * @author ckkk
  * @version 1.0
- * @description 登录响应视图对象
+ * 登录响应视图对象
  * @since 2026-04-18 11:16
  */
 @Data

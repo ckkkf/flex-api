@@ -3,7 +3,7 @@ package cc.flexapi.constants;
 /**
  * @author ckkk
  * @version 1.0
- * @description
+ *
  * @since 2026-04-20 18:58
  */
 public enum CommonError {

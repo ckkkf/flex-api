@@ -1,5 +1,6 @@
 package cc.flexapi.controller;
 
+
 import cc.flexapi.domain.dto.UsersManagerDTO;
 import cc.flexapi.domain.dto.UsersManagerEditDTO;
 import cc.flexapi.domain.po.Users;
@@ -21,7 +22,7 @@ import reactor.core.publisher.Mono;
 /**
  * @author xiaoyi
  * @version 1.0
- *          {@code @description} 用户管理接口
+ * {@code @description}
  * @since 2026-04-18 14:10
  */
 @Slf4j
@@ -35,17 +36,17 @@ public class UserController {
 
     /**
      * 用户登录
-     * 
      * @param turnstile 验证码
-     * @param request   登录信息
+     * @param request 登录信息
      * @return 登录信息
      */
     @RequestMapping("/login")
     public Mono<R<LoginVo>> login(@RequestParam(required = false, defaultValue = "") String turnstile,
-            @Valid @RequestBody LoginRequest request) {
+                                  @Valid @RequestBody LoginRequest request) {
         log.debug("【鉴权服务接口】用户登录。username: {}, turnstile: {}", request.getUsername(), turnstile);
         return R.ok(userService.login(turnstile, request));
     }
+
 
     /**
      * 根据ID查询用户
@@ -68,8 +69,7 @@ public class UserController {
     @Operation(summary = "添加用户")
     @PostMapping
     public Mono<R<Void>> addUser(@RequestBody UsersManagerDTO usersManagerDTO) {
-        log.debug("【用户管理服务接口】添加用户。username: {}, displayName: {}", usersManagerDTO.getUsername(),
-                usersManagerDTO.getDisplayName());
+        log.debug("【用户管理服务接口】添加用户。username: {}, displayName: {}", usersManagerDTO.getUsername(), usersManagerDTO.getDisplayName());
         return R.ok(userService.addUser(usersManagerDTO));
     }
 
@@ -83,7 +83,7 @@ public class UserController {
     @DeleteMapping("/delete")
     public Mono<R<Void>> deleteUser(@RequestBody Integer id) {
         log.debug("【用户管理服务接口】硬删除用户。id: {}", id);
-        return R.ok(userService.deleteUser(id));
+        return R.ok( userService.removeById(id));
     }
 
     /**
@@ -110,8 +110,7 @@ public class UserController {
     @Operation(summary = "更新用户")
     @PutMapping("/edit")
     public Mono<R<Void>> editUser(@RequestBody UsersManagerEditDTO usersManagerEditDTO) {
-        log.debug("【用户管理服务接口】编辑用户。id: {}, username: {}, status: {}", usersManagerEditDTO.getId(),
-                usersManagerEditDTO.getUsername(), usersManagerEditDTO.getStatus());
+        log.debug("【用户管理服务接口】编辑用户。id: {}, username: {}, status: {}", usersManagerEditDTO.getId(), usersManagerEditDTO.getUsername(), usersManagerEditDTO.getStatus());
         return R.ok(userService.editUser(usersManagerEditDTO));
     }
 
@@ -128,29 +127,17 @@ public class UserController {
     }
 
     /**
-     * 获取用户列表
-     *
-     * @param p        页码
-     * @param pageSize 每页数量
-     * @return 用户列表
-     */
-    @GetMapping()
-    public Flux<Users> listUser(Integer p, Integer pageSize) {
-        log.debug("【用户管理服务接口】获取用户列表。p: {}, pageSize: {}", p, pageSize);
-        return userService.list(p, pageSize);
-    }
-
-    /**
      * 更新用户信息
      *
-     * @param userManageRequest 个人用户信息
+     * @param userManageRequest 用户信息
      * @return void
      */
-    @Operation(summary = "更新个人用户信息")
+    @Operation(summary = "更新用户信息")
     @PutMapping("/update")
     public Mono<R<Void>> updateUser(@RequestBody UserManageRequest userManageRequest) {
         log.debug("【用户管理服务接口】更新用户信息。id: {}, action: {}", userManageRequest.getId(), userManageRequest.getAction());
         return R.ok(userService.updateUser(userManageRequest));
     }
+
 
 }

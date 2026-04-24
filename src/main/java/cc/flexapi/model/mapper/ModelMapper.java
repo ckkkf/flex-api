@@ -5,7 +5,6 @@ import cn.hutool.core.bean.BeanUtil;
 /**
  * @author ckkk
  * @version 1.0
- * description 模型映射工具类
  * @since 2026-04-23 20:43
  */
 public class ModelMapper {

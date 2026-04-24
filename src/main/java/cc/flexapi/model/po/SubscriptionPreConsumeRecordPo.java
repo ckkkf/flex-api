@@ -8,7 +8,7 @@ import org.springframework.data.relational.core.mapping.Table;
 /**
  * @author ckkk
  * @version 1.0
- * @description subscription_pre_consume_records 表持久化对象
+ * subscription_pre_consume_records 表持久化对象
  * @since 2026-04-21 19:00
  */
 @Data

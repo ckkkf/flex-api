@@ -6,7 +6,7 @@ import java.time.OffsetDateTime;
 /**
  * @author ckkk
  * @version 1.0
- * @description users 表服务传输对象
+ * users 表服务传输对象
  * @since 2026-04-21 19:00
  */
 @Data

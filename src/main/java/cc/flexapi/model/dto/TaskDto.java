@@ -5,7 +5,7 @@ import lombok.Data;
 /**
  * @author ckkk
  * @version 1.0
- * @description tasks 表服务传输对象
+ * tasks 表服务传输对象
  * @since 2026-04-21 19:00
  */
 @Data

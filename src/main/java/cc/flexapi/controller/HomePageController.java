@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
 /**
  * @author ckkk
  * @version 1.0
- * @description TODO：写死
+ * TODO：写死
  * @since 2026-04-18 14:10
  */
 @Slf4j
