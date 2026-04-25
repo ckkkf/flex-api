@@ -26,6 +26,41 @@ import {
 import axios from 'axios';
 import { MESSAGE_ROLES } from '../constants/playground.constants';
 
+const IDEMPOTENCY_HEADER = 'X-Idempotency-Key';
+const IDEMPOTENT_METHODS = new Set(['post', 'put', 'patch', 'delete']);
+
+export const createIdempotencyKey = () => {
+  if (
+    typeof crypto !== 'undefined' &&
+    typeof crypto.randomUUID === 'function'
+  ) {
+    return crypto.randomUUID();
+  }
+
+  return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+};
+
+const shouldAttachIdempotencyKey = (method = 'get') =>
+  IDEMPOTENT_METHODS.has(String(method).toLowerCase());
+
+export const withIdempotencyHeader = (headers = {}, method = 'POST') => {
+  const normalizedHeaders = { ...headers };
+
+  if (!shouldAttachIdempotencyKey(method)) {
+    return normalizedHeaders;
+  }
+
+  if (
+    normalizedHeaders[IDEMPOTENCY_HEADER] ||
+    normalizedHeaders[IDEMPOTENCY_HEADER.toLowerCase()]
+  ) {
+    return normalizedHeaders;
+  }
+
+  normalizedHeaders[IDEMPOTENCY_HEADER] = createIdempotencyKey();
+  return normalizedHeaders;
+};
+
 export let API = axios.create({
   baseURL: import.meta.env.VITE_REACT_APP_SERVER_URL
     ? import.meta.env.VITE_REACT_APP_SERVER_URL
@@ -35,7 +70,6 @@ export let API = axios.create({
     'Cache-Control': 'no-store',
   },
 });
-
 
 function redirectToOAuthUrl(url, options = {}) {
   const { openInNewTab = false } = options;
@@ -49,6 +83,42 @@ function redirectToOAuthUrl(url, options = {}) {
   window.location.assign(targetUrl);
 }
 
+function attachAPIInterceptors(instance) {
+  instance.interceptors.request.use((config) => {
+    if (!shouldAttachIdempotencyKey(config.method)) {
+      return config;
+    }
+
+    const headers = config.headers;
+    if (headers?.get?.(IDEMPOTENCY_HEADER)) {
+      return config;
+    }
+
+    const idempotencyKey = createIdempotencyKey();
+    if (headers?.set) {
+      headers.set(IDEMPOTENCY_HEADER, idempotencyKey);
+    } else {
+      config.headers = {
+        ...(headers || {}),
+        [IDEMPOTENCY_HEADER]: idempotencyKey,
+      };
+    }
+
+    return config;
+  });
+
+  instance.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      // 如果请求配置中显式要求跳过全局错误处理，则不弹出默认错误提示
+      if (error.config && error.config.skipErrorHandler) {
+        return Promise.reject(error);
+      }
+      showError(error);
+      return Promise.reject(error);
+    },
+  );
+}
 
 function patchAPIInstance(instance) {
   const originalGet = instance.get.bind(instance);
@@ -78,6 +148,7 @@ function patchAPIInstance(instance) {
   };
 }
 
+attachAPIInterceptors(API);
 patchAPIInstance(API);
 
 export function updateAPI() {
@@ -91,20 +162,9 @@ export function updateAPI() {
     },
   });
 
+  attachAPIInterceptors(API);
   patchAPIInstance(API);
 }
-
-API.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    // 如果请求配置中显式要求跳过全局错误处理，则不弹出默认错误提示
-    if (error.config && error.config.skipErrorHandler) {
-      return Promise.reject(error);
-    }
-    showError(error);
-    return Promise.reject(error);
-  },
-);
 
 // playground
 

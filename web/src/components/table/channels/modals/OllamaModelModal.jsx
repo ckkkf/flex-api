@@ -49,6 +49,7 @@ import {
   getUserIdFromLocalStorage,
   showError,
   showSuccess,
+  withIdempotencyHeader,
 } from '../../../../helpers';
 
 const { Text, Title } = Typography;
@@ -332,12 +333,15 @@ const OllamaModelModal = ({
       // 使用 fetch 请求 SSE 流
       const authHeaders = authHeader();
       const userId = getUserIdFromLocalStorage();
-      const fetchHeaders = {
-        'Content-Type': 'application/json',
-        Accept: 'text/event-stream',
-        'New-API-User': String(userId),
-        ...authHeaders,
-      };
+      const fetchHeaders = withIdempotencyHeader(
+        {
+          'Content-Type': 'application/json',
+          Accept: 'text/event-stream',
+          'New-API-User': String(userId),
+          ...authHeaders,
+        },
+        'POST',
+      );
 
       const response = await fetch('/api/channel/ollama/pull/stream', {
         method: 'POST',
