@@ -88,6 +88,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Mono<Void> logout() {
+        return SaReactorHolder.sync(() -> {
+            Long loginId = StpUtil.getLoginIdAsLong();
+            StpUtil.logout();
+            log.info("[退出登录] loginId: {}", loginId);
+            return Boolean.TRUE;
+        }).then();
+    }
+
+    @Override
     public Mono<Void> addUser(UsersManagerAddRequest usersManagerAddRequest) {
         if (usersManagerAddRequest.getUsername() == null) {
             return Mono.error(new BusinessException("用户名不能为空"));

@@ -1,0 +1,11 @@
+flexapi:
+  datasource:
+    host: 127.0.0.1
+    port: 5432
+    database: flex_api
+    username: flex_api
+    password: 123456
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: 123456

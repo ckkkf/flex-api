@@ -40,12 +40,26 @@ public class UserController {
      * @param request 登录信息
      * @return 登录信息
      */
-    @RequestMapping("/login")
+    @Operation(summary = "用户登录")
+    @PostMapping("/login")
     public Mono<R<LoginVo>> login(@RequestParam(required = false, defaultValue = "") String turnstile,
                                   @Valid @RequestBody LoginRequest request) {
         log.debug("【鉴权服务接口】用户登录。username: {}, turnstile: {}", request.getUsername(), turnstile);
         return R.ok(userService.login(turnstile, request));
     }
+
+    /**
+     * 用户退出登录
+     *
+     * @return void
+     */
+    @Operation(summary = "用户退出登录")
+    @GetMapping("/logout")
+    public Mono<R<Void>> logout() {
+        log.debug("【鉴权服务接口】用户退出登录");
+        return R.ok(userService.logout());
+    }
+
 
 
     /**
@@ -54,6 +68,7 @@ public class UserController {
      * @param id 用户ID
      * @return 用户信息
      */
+    @Operation(summary = "根据ID查询用户")
     @GetMapping("/{id}")
     public Mono<UserPo> getUserById(@PathVariable String id) {
         log.debug("【用户管理服务接口】根据ID查询用户。id: {}", id);

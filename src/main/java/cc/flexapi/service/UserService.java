@@ -17,6 +17,23 @@ import reactor.core.publisher.Mono;
  */
 public interface UserService {
 
+
+    /**
+     * 登录
+     *
+     * @param turnstile 验证码
+     * @param request   登录信息
+     * @return 登录信息
+     */
+    Mono<LoginVo> login(String turnstile, LoginRequest request);
+
+    /**
+     * 退出登录
+     *
+     * @return void
+     */
+    Mono<Void> logout();
+
     /**
      * 添加用户
      *
@@ -107,13 +124,5 @@ public interface UserService {
      */
     Mono<Void> removeById(Long id);
 
-    /**
-     * 登录
-     *
-     * @param turnstile 验证码
-     * @param request   登录信息
-     * @return 登录信息
-     */
-    Mono<LoginVo> login(String turnstile, LoginRequest request);
 
 }
