@@ -15,12 +15,12 @@ public class PasskeyCredentialDto {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * user_id
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * base64 encoded
@@ -45,7 +45,7 @@ public class PasskeyCredentialDto {
     /**
      * sign_count
      */
-    private Integer signCount;
+    private Long signCount;
 
     /**
      * clone_warning

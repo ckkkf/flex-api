@@ -21,13 +21,13 @@ public class TwoFABackupCodePo {
      */
     @Id
     @Column("id")
-    private Integer id;
+    private Long id;
 
     /**
      * user_id
      */
     @Column("user_id")
-    private Integer userId;
+    private Long userId;
 
     /**
      * 备用码哈希

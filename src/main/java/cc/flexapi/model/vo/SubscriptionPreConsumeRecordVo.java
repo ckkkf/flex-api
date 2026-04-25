@@ -15,7 +15,7 @@ public class SubscriptionPreConsumeRecordVo {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * request_id
@@ -27,13 +27,13 @@ public class SubscriptionPreConsumeRecordVo {
      * user_id
      */
     @JsonProperty("user_id")
-    private Integer userId;
+    private Long userId;
 
     /**
      * user_subscription_id
      */
     @JsonProperty("user_subscription_id")
-    private Integer userSubscriptionId;
+    private Long userSubscriptionId;
 
     /**
      * pre_consumed

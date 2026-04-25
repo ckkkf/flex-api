@@ -20,13 +20,13 @@ public class LogPo {
      */
     @Id
     @Column("id")
-    private Integer id;
+    private Long id;
 
     /**
      * user_id
      */
     @Column("user_id")
-    private Integer userId;
+    private Long userId;
 
     /**
      * created_at
@@ -38,7 +38,7 @@ public class LogPo {
      * type
      */
     @Column("type")
-    private Integer type;
+    private Long type;
 
     /**
      * content
@@ -68,25 +68,25 @@ public class LogPo {
      * quota
      */
     @Column("quota")
-    private Integer quota;
+    private Long quota;
 
     /**
      * prompt_tokens
      */
     @Column("prompt_tokens")
-    private Integer promptTokens;
+    private Long promptTokens;
 
     /**
      * completion_tokens
      */
     @Column("completion_tokens")
-    private Integer completionTokens;
+    private Long completionTokens;
 
     /**
      * use_time
      */
     @Column("use_time")
-    private Integer useTime;
+    private Long useTime;
 
     /**
      * is_stream
@@ -98,7 +98,7 @@ public class LogPo {
      * channel_id
      */
     @Column("channel_id")
-    private Integer channelId;
+    private Long channelId;
 
     /**
      * channel_name
@@ -110,7 +110,7 @@ public class LogPo {
      * token_id
      */
     @Column("token_id")
-    private Integer tokenId;
+    private Long tokenId;
 
     /**
      * group

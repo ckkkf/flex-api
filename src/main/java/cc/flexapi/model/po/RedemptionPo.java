@@ -21,13 +21,13 @@ public class RedemptionPo {
      */
     @Id
     @Column("id")
-    private Integer id;
+    private Long id;
 
     /**
      * user_id
      */
     @Column("user_id")
-    private Integer userId;
+    private Long userId;
 
     /**
      * key
@@ -51,7 +51,7 @@ public class RedemptionPo {
      * quota
      */
     @Column("quota")
-    private Integer quota;
+    private Long quota;
 
     /**
      * created_time
@@ -69,7 +69,7 @@ public class RedemptionPo {
      * used_user_id
      */
     @Column("used_user_id")
-    private Integer usedUserId;
+    private Long usedUserId;
 
     /**
      * deleted_at

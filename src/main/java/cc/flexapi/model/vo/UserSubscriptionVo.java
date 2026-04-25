@@ -15,19 +15,19 @@ public class UserSubscriptionVo {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * user_id
      */
     @JsonProperty("user_id")
-    private Integer userId;
+    private Long userId;
 
     /**
      * plan_id
      */
     @JsonProperty("plan_id")
-    private Integer planId;
+    private Long planId;
 
     /**
      * amount_total

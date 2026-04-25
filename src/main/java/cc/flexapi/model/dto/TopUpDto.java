@@ -14,12 +14,12 @@ public class TopUpDto {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * user_id
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * amount

@@ -44,7 +44,7 @@ public class TaskVo {
      * user_id
      */
     @JsonProperty("user_id")
-    private Integer userId;
+    private Long userId;
 
     /**
      * 修正计费用
@@ -55,12 +55,12 @@ public class TaskVo {
      * channel_id
      */
     @JsonProperty("channel_id")
-    private Integer channelId;
+    private Long channelId;
 
     /**
      * quota
      */
-    private Integer quota;
+    private Long quota;
 
     /**
      * 任务类型, song, lyrics, description-mode

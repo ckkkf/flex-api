@@ -15,7 +15,7 @@ public class UserDto {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * username
@@ -80,17 +80,17 @@ public class UserDto {
     /**
      * quota
      */
-    private Integer quota;
+    private Long quota;
 
     /**
      * used quota
      */
-    private Integer usedQuota;
+    private Long usedQuota;
 
     /**
      * request number
      */
-    private Integer requestCount;
+    private Long requestCount;
 
     /**
      * group
@@ -105,22 +105,22 @@ public class UserDto {
     /**
      * aff_count
      */
-    private Integer affCount;
+    private Long affCount;
 
     /**
      * 邀请剩余额度
      */
-    private Integer affQuota;
+    private Long affQuota;
 
     /**
      * 邀请历史额度
      */
-    private Integer affHistory;
+    private Long affHistory;
 
     /**
      * inviter_id
      */
-    private Integer inviterId;
+    private Long inviterId;
 
     /**
      * deleted_at

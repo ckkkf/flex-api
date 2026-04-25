@@ -15,7 +15,7 @@ public class CustomOAuthProviderDto {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * Display name, e.g., "GitHub Enterprise"
@@ -95,7 +95,7 @@ public class CustomOAuthProviderDto {
     /**
      * 0=auto, 1=params, 2=header (Basic Auth)
      */
-    private Integer authStyle;
+    private Long authStyle;
 
     /**
      * JSON policy for access control based on user info

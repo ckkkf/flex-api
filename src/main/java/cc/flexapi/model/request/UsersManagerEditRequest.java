@@ -1,4 +1,4 @@
-package cc.flexapi.domain.dto;
+package cc.flexapi.model.request;
 
 
 
@@ -6,10 +6,10 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class UsersManagerEditDTO {
+public class UsersManagerEditRequest {
 
     @NotBlank(message = "用户id不能为空")
-    private Integer id;
+    private Long id;
 
     private String username;
 
@@ -27,7 +27,5 @@ public class UsersManagerEditDTO {
     private Integer role;
 
     private Integer status;
-
-
 
 }

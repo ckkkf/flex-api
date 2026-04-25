@@ -16,7 +16,7 @@ public class ModelVo {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * model_name
@@ -43,7 +43,7 @@ public class ModelVo {
      * vendor_id
      */
     @JsonProperty("vendor_id")
-    private Integer vendorId;
+    private Long vendorId;
 
     /**
      * endpoints
@@ -59,7 +59,7 @@ public class ModelVo {
      * sync_official
      */
     @JsonProperty("sync_official")
-    private Integer syncOfficial;
+    private Long syncOfficial;
 
     /**
      * created_time
@@ -83,6 +83,6 @@ public class ModelVo {
      * name_rule
      */
     @JsonProperty("name_rule")
-    private Integer nameRule;
+    private Long nameRule;
 
 }

@@ -15,12 +15,12 @@ public class TwoFABackupCodeDto {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * user_id
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * 备用码哈希

@@ -20,13 +20,13 @@ public class ChannelPo {
      */
     @Id
     @Column("id")
-    private Integer id;
+    private Long id;
 
     /**
      * type
      */
     @Column("type")
-    private Integer type;
+    private Long type;
 
     /**
      * key
@@ -62,7 +62,7 @@ public class ChannelPo {
      * weight
      */
     @Column("weight")
-    private Integer weight;
+    private Long weight;
 
     /**
      * created_time
@@ -80,7 +80,7 @@ public class ChannelPo {
      * in milliseconds
      */
     @Column("response_time")
-    private Integer responseTime;
+    private Long responseTime;
 
     /**
      * base_url
@@ -146,7 +146,7 @@ public class ChannelPo {
      * auto_ban
      */
     @Column("auto_ban")
-    private Integer autoBan;
+    private Long autoBan;
 
     /**
      * other_info

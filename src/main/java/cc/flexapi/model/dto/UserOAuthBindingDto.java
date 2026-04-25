@@ -15,17 +15,17 @@ public class UserOAuthBindingDto {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * User ID - one binding per user per provider
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * Custom OAuth provider ID
      */
-    private Integer providerId;
+    private Long providerId;
 
     /**
      * User ID from OAuth provider - one OAuth account per provider

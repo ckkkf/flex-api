@@ -15,12 +15,12 @@ public class ChannelVo {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * type
      */
-    private Integer type;
+    private Long type;
 
     /**
      * open_ai_organization
@@ -47,7 +47,7 @@ public class ChannelVo {
     /**
      * weight
      */
-    private Integer weight;
+    private Long weight;
 
     /**
      * created_time
@@ -65,7 +65,7 @@ public class ChannelVo {
      * in milliseconds
      */
     @JsonProperty("response_time")
-    private Integer responseTime;
+    private Long responseTime;
 
     /**
      * base_url
@@ -126,7 +126,7 @@ public class ChannelVo {
      * auto_ban
      */
     @JsonProperty("auto_ban")
-    private Integer autoBan;
+    private Long autoBan;
 
     /**
      * other_info

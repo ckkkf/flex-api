@@ -15,7 +15,7 @@ public class ModelDto {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * model_name
@@ -40,7 +40,7 @@ public class ModelDto {
     /**
      * vendor_id
      */
-    private Integer vendorId;
+    private Long vendorId;
 
     /**
      * endpoints
@@ -55,7 +55,7 @@ public class ModelDto {
     /**
      * sync_official
      */
-    private Integer syncOfficial;
+    private Long syncOfficial;
 
     /**
      * created_time
@@ -75,6 +75,6 @@ public class ModelDto {
     /**
      * name_rule
      */
-    private Integer nameRule;
+    private Long nameRule;
 
 }

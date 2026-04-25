@@ -15,7 +15,7 @@ public class LoginVo {
     /**
      * 用户主键
      */
-    private Integer id;
+    private Long id;
 
     /**
      * 所属分组

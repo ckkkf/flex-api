@@ -15,7 +15,7 @@ public class SetupVo {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * version

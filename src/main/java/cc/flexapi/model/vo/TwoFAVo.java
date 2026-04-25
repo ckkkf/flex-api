@@ -16,13 +16,13 @@ public class TwoFAVo {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * user_id
      */
     @JsonProperty("user_id")
-    private Integer userId;
+    private Long userId;
 
     /**
      * is_enabled
@@ -34,7 +34,7 @@ public class TwoFAVo {
      * failed_attempts
      */
     @JsonProperty("failed_attempts")
-    private Integer failedAttempts;
+    private Long failedAttempts;
 
     /**
      * locked_until

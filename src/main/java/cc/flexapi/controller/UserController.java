@@ -1,9 +1,9 @@
 package cc.flexapi.controller;
 
 
-import cc.flexapi.domain.dto.UsersManagerDTO;
-import cc.flexapi.domain.dto.UsersManagerEditDTO;
-import cc.flexapi.domain.po.Users;
+import cc.flexapi.model.po.UserPo;
+import cc.flexapi.model.request.UsersManagerAddRequest;
+import cc.flexapi.model.request.UsersManagerEditRequest;
 import cc.flexapi.model.request.LoginRequest;
 import cc.flexapi.model.request.UserManageRequest;
 import cc.flexapi.model.response.P;
@@ -55,7 +55,7 @@ public class UserController {
      * @return 用户信息
      */
     @GetMapping("/{id}")
-    public Mono<Users> getUserById(@PathVariable String id) {
+    public Mono<UserPo> getUserById(@PathVariable String id) {
         log.debug("【用户管理服务接口】根据ID查询用户。id: {}", id);
         return userService.findById(id);
     }
@@ -63,14 +63,14 @@ public class UserController {
     /**
      * 添加用户
      *
-     * @param usersManagerDTO 用户信息
+     * @param usersManagerAddRequest 用户信息
      * @return void
      */
     @Operation(summary = "添加用户")
     @PostMapping
-    public Mono<R<Void>> addUser(@RequestBody UsersManagerDTO usersManagerDTO) {
-        log.debug("【用户管理服务接口】添加用户。username: {}, displayName: {}", usersManagerDTO.getUsername(), usersManagerDTO.getDisplayName());
-        return R.ok(userService.addUser(usersManagerDTO));
+    public Mono<R<Void>> addUser(@RequestBody UsersManagerAddRequest usersManagerAddRequest) {
+        log.debug("【用户管理服务接口】添加用户。username: {}, displayName: {}", usersManagerAddRequest.getUsername(), usersManagerAddRequest.getDisplayName());
+        return R.ok(userService.addUser(usersManagerAddRequest));
     }
 
     /**
@@ -81,7 +81,7 @@ public class UserController {
      */
     @Operation(summary = "硬删除用户")
     @DeleteMapping("/delete")
-    public Mono<R<Void>> deleteUser(@RequestBody Integer id) {
+    public Mono<R<Void>> deleteUser(@RequestBody Long id) {
         log.debug("【用户管理服务接口】硬删除用户。id: {}", id);
         return R.ok( userService.removeById(id));
     }
@@ -96,7 +96,7 @@ public class UserController {
      */
     @Operation(summary = "搜索用户")
     @GetMapping("/search")
-    public Mono<P<Users>> searchUser(@RequestBody String query, Integer p, Integer pageSize) {
+    public Mono<P<UserPo>> searchUser(@RequestBody String query, Integer p, Integer pageSize) {
         log.debug("【用户管理服务接口】搜索用户。query: {}, p: {}, pageSize: {}", query, p, pageSize);
         return userService.search(query, p, pageSize);
     }
@@ -104,14 +104,14 @@ public class UserController {
     /**
      * 更新用户信息
      *
-     * @param usersManagerEditDTO 用户信息
+     * @param usersManagerEditRequest 用户信息
      * @return void
      */
     @Operation(summary = "更新用户")
     @PutMapping("/edit")
-    public Mono<R<Void>> editUser(@RequestBody UsersManagerEditDTO usersManagerEditDTO) {
-        log.debug("【用户管理服务接口】编辑用户。id: {}, username: {}, status: {}", usersManagerEditDTO.getId(), usersManagerEditDTO.getUsername(), usersManagerEditDTO.getStatus());
-        return R.ok(userService.editUser(usersManagerEditDTO));
+    public Mono<R<Void>> editUser(@RequestBody UsersManagerEditRequest usersManagerEditRequest) {
+        log.debug("【用户管理服务接口】编辑用户。id: {}, username: {}, status: {}", usersManagerEditRequest.getId(), usersManagerEditRequest.getUsername(), usersManagerEditRequest.getStatus());
+        return R.ok(userService.editUser(usersManagerEditRequest));
     }
 
     /**
@@ -121,7 +121,7 @@ public class UserController {
      */
     @Operation(summary = "用户列表")
     @GetMapping
-    public Flux<Users> listUser() {
+    public Flux<UserPo> listUser() {
         log.debug("【用户管理服务接口】获取用户列表。该接口禁止直接获取全部用户数据");
         throw new RuntimeException("禁止直接获取所有用户，请改为分页");
     }

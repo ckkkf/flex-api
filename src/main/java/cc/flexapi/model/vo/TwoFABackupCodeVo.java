@@ -16,13 +16,13 @@ public class TwoFABackupCodeVo {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * user_id
      */
     @JsonProperty("user_id")
-    private Integer userId;
+    private Long userId;
 
     /**
      * is_used

@@ -24,7 +24,7 @@ public class AbilityDto {
     /**
      * channel_id
      */
-    private Integer channelId;
+    private Long channelId;
 
     /**
      * enabled
@@ -39,7 +39,7 @@ public class AbilityDto {
     /**
      * weight
      */
-    private Integer weight;
+    private Long weight;
 
     /**
      * tag

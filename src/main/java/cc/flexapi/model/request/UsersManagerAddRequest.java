@@ -1,11 +1,11 @@
-package cc.flexapi.domain.dto;
+package cc.flexapi.model.request;
 
 
 import lombok.Data;
 
 @Data
-public class UsersManagerDTO {
-    private Integer id;
+public class UsersManagerAddRequest {
+    private Long id;
 
     private String username;
 

@@ -16,13 +16,13 @@ public class RedemptionVo {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * user_id
      */
     @JsonProperty("user_id")
-    private Integer userId;
+    private Long userId;
 
     /**
      * key
@@ -42,7 +42,7 @@ public class RedemptionVo {
     /**
      * quota
      */
-    private Integer quota;
+    private Long quota;
 
     /**
      * created_time
@@ -60,7 +60,7 @@ public class RedemptionVo {
      * used_user_id
      */
     @JsonProperty("used_user_id")
-    private Integer usedUserId;
+    private Long usedUserId;
 
     /**
      * deleted_at

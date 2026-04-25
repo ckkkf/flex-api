@@ -20,13 +20,13 @@ public class TopUpPo {
      */
     @Id
     @Column("id")
-    private Integer id;
+    private Long id;
 
     /**
      * user_id
      */
     @Column("user_id")
-    private Integer userId;
+    private Long userId;
 
     /**
      * amount

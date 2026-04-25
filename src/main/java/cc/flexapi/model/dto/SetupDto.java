@@ -14,7 +14,7 @@ public class SetupDto {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * version

@@ -1,9 +1,9 @@
 package cc.flexapi.service.impl;
 
 import cc.flexapi.constants.UserConstants;
-import cc.flexapi.domain.dto.UsersManagerDTO;
-import cc.flexapi.domain.dto.UsersManagerEditDTO;
-import cc.flexapi.domain.po.Users;
+import cc.flexapi.model.po.UserPo;
+import cc.flexapi.model.request.UsersManagerAddRequest;
+import cc.flexapi.model.request.UsersManagerEditRequest;
 import cc.flexapi.exception.BusinessException;
 import cc.flexapi.mapper.UserMapper;
 import cc.flexapi.model.mapper.ModelMapper;
@@ -14,7 +14,10 @@ import cc.flexapi.model.vo.LoginVo;
 import cc.flexapi.service.TurnstileService;
 import cc.flexapi.service.UserService;
 import cn.dev33.satoken.context.SaHolder;
+import cn.dev33.satoken.reactor.context.SaReactorHolder;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.Hutool;
+import cn.hutool.crypto.digest.BCrypt;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -65,40 +68,41 @@ public class UserServiceImpl implements UserService {
                 .switchIfEmpty((Mono.error(new BusinessException("用户不存在"))))
                 .flatMap(userPo -> {
                     // 密码校验
-                    if (!userPo.getPassword().equals(request.getPassword())) {
+                    if (!BCrypt.checkpw(request.getPassword(),userPo.getPassword())) {
                         return Mono.error(new BusinessException("用户名或密码错误"));
                     }
                     // 状态校验
-                    if (UserConstants.USER_STATUS_NORMAL.equals(userPo.getStatus())) {
+                    if (!UserConstants.USER_STATUS_NORMAL.equals(userPo.getStatus())) {
                         return Mono.error(new BusinessException("该账户已被禁用"));
                     }
                     if (userPo.getDeletedAt() != null) {
                         return Mono.error(new BusinessException("该账户已被注销"));
                     }
                     // 登录
-                    StpUtil.login(userPo.getId());
-                    log.info("[登录成功] 用户名: {}, IP: {}", userPo.getUsername(), SaHolder.getRequest().getHost());
-                    return Mono.just(ModelMapper.toVo(userPo, LoginVo.class));
+                    return SaReactorHolder.sync(()->{
+                        StpUtil.login(userPo.getId());
+                        log.info("[登录成功] 用户名: {}, IP: {}", userPo.getUsername(), SaHolder.getRequest().getHost());
+                        return ModelMapper.toVo(userPo, LoginVo.class);
+                    });
                 });
     }
 
     @Override
-    public Mono<Void> addUser(UsersManagerDTO usersManagerDTO) {
-        if (usersManagerDTO.getUsername() == null) {
+    public Mono<Void> addUser(UsersManagerAddRequest usersManagerAddRequest) {
+        if (usersManagerAddRequest.getUsername() == null) {
             return Mono.error(new BusinessException("用户名不能为空"));
         }
-        if (usersManagerDTO.getPassword() == null) {
+        if (usersManagerAddRequest.getPassword() == null) {
             return Mono.error(new BusinessException("密码不能为空"));
         }
 
-        Users users = new Users();
-        BeanUtils.copyProperties(usersManagerDTO, users);
+        UserPo users = new UserPo();
+        BeanUtils.copyProperties(usersManagerAddRequest, users);
         users.setRole(2);
         users.setStatus(1);
-        users.setQuota(0);
-        users.setUsedQuota(0);
-        users.setRequestCount(0);
-        users.setUser_group("default");
+        users.setQuota(0L);
+        users.setUsedQuota(0L);
+        users.setRequestCount(0L);
 
         return userMapper.insertUser(
                 users.getUsername(),
@@ -111,23 +115,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Mono<Void> deleteById(Integer id) {
+    public Mono<Void> deleteById(Long id) {
         LocalDateTime now = LocalDateTime.now();
         return userMapper.deleteById(id, now).then();
     }
 
     @Override
-    public Mono<Void> disableUser(Integer id) {
+    public Mono<Void> disableUser(Long id) {
         return userMapper.disableUser(id).then();
     }
 
     @Override
-    public Mono<Void> enableUser(Integer id) {
+    public Mono<Void> enableUser(Long id) {
         return userMapper.enableUser(id).then();
     }
 
     @Override
-    public Mono<Void> promoteById(Integer id) {
+    public Mono<Void> promoteById(Long id) {
         return userMapper.getUsersById(id)
                 .switchIfEmpty(Mono.error(new BusinessException("用户不存在")))
                 .flatMap(users -> {
@@ -139,7 +143,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Mono<Void> demoteById(Integer id) {
+    public Mono<Void> demoteById(Long id) {
         return userMapper.getUsersById(id)
                 .switchIfEmpty(Mono.error(new BusinessException("用户不存在")))
                 .flatMap(users -> {
@@ -151,37 +155,37 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Mono<Void> editUser(UsersManagerEditDTO usersManagerEditDTO) {
-        return userMapper.getUsersById(usersManagerEditDTO.getId())
+    public Mono<Void> editUser(UsersManagerEditRequest usersManagerEditRequest) {
+        return userMapper.getUsersById(usersManagerEditRequest.getId())
                 .switchIfEmpty(Mono.error(new BusinessException("用户不存在")))
                 .flatMap(users -> {
                     if (users.getUsername() != null && users.getPassword() != null) {
-                        if (users.getUsername().equals(usersManagerEditDTO.getUsername())
-                                && users.getPassword().equals(usersManagerEditDTO.getPassword())) {
+                        if (users.getUsername().equals(usersManagerEditRequest.getUsername())
+                                && users.getPassword().equals(usersManagerEditRequest.getPassword())) {
                             return Mono.error(new BusinessException("密码重复"));
                         }
-                        if (users.getUsername().equals(usersManagerEditDTO.getUsername())) {
+                        if (users.getUsername().equals(usersManagerEditRequest.getUsername())) {
                             return Mono.error(new BusinessException("用户名已存在"));
                         }
                     }
 
-                    Users users1 = new Users();
-                    BeanUtils.copyProperties(usersManagerEditDTO, users1);
+                    UserPo users1 = new UserPo();
+                    BeanUtils.copyProperties(usersManagerEditRequest, users1);
                     return userMapper.updateUserInfo(
                             users1.getId(),
                             users1.getUsername(),
                             users1.getDisplayName(),
                             users1.getEmail(),
                             users1.getPassword(),
-                            users1.getQuota() == null ? null : Math.toIntExact(users1.getQuota()),
+                            users1.getQuota(),
                             users1.getRole(),
                             users1.getStatus()).then();
                 });
     }
 
     @Override
-    public Mono<Users> findById(String id) {
-        return userMapper.getUsersById(Integer.parseInt(id));
+    public Mono<UserPo> findById(String id) {
+        return userMapper.getUsersById(Long.parseLong(id));
     }
 
     /**
@@ -204,7 +208,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Mono<P<Users>> search(String query, Integer p, Integer pageSize) {
+    public Mono<P<UserPo>> search(String query, Integer p, Integer pageSize) {
         // 1. 参数规范化
         int pageNo = Math.max(1, (p == null) ? 1 : p);
         int size = Math.min(Math.max(1, (pageSize == null) ? 20 : pageSize), 100);
@@ -237,13 +241,13 @@ public class UserServiceImpl implements UserService {
         Query baseQuery = Query.query(criteria);
 
         // 6. 响应式并发执行
-        Mono<Long> totalMono = r2dbcEntityTemplate.count(baseQuery, Users.class);
+        Mono<Long> totalMono = r2dbcEntityTemplate.count(baseQuery, UserPo.class);
 
         Query pageQuery = baseQuery
                 .with(PageRequest.of(pageNo - 1, size))
                 .sort(Sort.by(Sort.Order.desc("id")));
 
-        Mono<List<Users>> dataMono = r2dbcEntityTemplate.select(pageQuery, Users.class).collectList();
+        Mono<List<UserPo>> dataMono = r2dbcEntityTemplate.select(pageQuery, UserPo.class).collectList();
 
         // 7. 使用 zip 合并结果并封装进 P 对象
         return Mono.zip(dataMono, totalMono)
@@ -255,10 +259,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Mono<Void> removeById(Integer id) {
+    public Mono<Void> removeById(Long id) {
         // Since ReactiveCrudRepository provides Mono<Void> deleteById(ID id),
         // we can cast to our domain if needed, but our custom mapper returns
-        // Mono<Integer>.
+        // Mono<Long>.
         // However, there is no generic parameter-less deleteById on userMapper except
         // the inherited one that returns Mono<Void>.
         // Looking at the older version it was deleting directly via inherited

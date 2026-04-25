@@ -15,7 +15,7 @@ public class PrefillGroupDto {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * name

@@ -21,13 +21,13 @@ public class PasskeyCredentialPo {
      */
     @Id
     @Column("id")
-    private Integer id;
+    private Long id;
 
     /**
      * user_id
      */
     @Column("user_id")
-    private Integer userId;
+    private Long userId;
 
     /**
      * base64 encoded
@@ -57,7 +57,7 @@ public class PasskeyCredentialPo {
      * sign_count
      */
     @Column("sign_count")
-    private Integer signCount;
+    private Long signCount;
 
     /**
      * clone_warning

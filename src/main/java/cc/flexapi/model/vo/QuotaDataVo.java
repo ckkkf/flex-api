@@ -15,13 +15,13 @@ public class QuotaDataVo {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * user_id
      */
     @JsonProperty("user_id")
-    private Integer userId;
+    private Long userId;
 
     /**
      * username
@@ -44,16 +44,16 @@ public class QuotaDataVo {
      * token_used
      */
     @JsonProperty("token_used")
-    private Integer tokenUsed;
+    private Long tokenUsed;
 
     /**
      * count
      */
-    private Integer count;
+    private Long count;
 
     /**
      * quota
      */
-    private Integer quota;
+    private Long quota;
 
 }

@@ -50,7 +50,7 @@ public class TaskPo {
      * user_id
      */
     @Column("user_id")
-    private Integer userId;
+    private Long userId;
 
     /**
      * 修正计费用
@@ -62,13 +62,13 @@ public class TaskPo {
      * channel_id
      */
     @Column("channel_id")
-    private Integer channelId;
+    private Long channelId;
 
     /**
      * quota
      */
     @Column("quota")
-    private Integer quota;
+    private Long quota;
 
     /**
      * 任务类型, song, lyrics, description-mode

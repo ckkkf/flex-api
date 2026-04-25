@@ -14,7 +14,7 @@ public class SubscriptionPlanDto {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * title
@@ -44,7 +44,7 @@ public class SubscriptionPlanDto {
     /**
      * duration_value
      */
-    private Integer durationValue;
+    private Long durationValue;
 
     /**
      * custom_seconds
@@ -59,7 +59,7 @@ public class SubscriptionPlanDto {
     /**
      * sort_order
      */
-    private Integer sortOrder;
+    private Long sortOrder;
 
     /**
      * stripe_price_id
@@ -74,7 +74,7 @@ public class SubscriptionPlanDto {
     /**
      * max_purchase_per_user
      */
-    private Integer maxPurchasePerUser;
+    private Long maxPurchasePerUser;
 
     /**
      * upgrade_group

@@ -15,12 +15,12 @@ public class RedemptionDto {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * user_id
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * key
@@ -40,7 +40,7 @@ public class RedemptionDto {
     /**
      * quota
      */
-    private Integer quota;
+    private Long quota;
 
     /**
      * created_time
@@ -55,7 +55,7 @@ public class RedemptionDto {
     /**
      * used_user_id
      */
-    private Integer usedUserId;
+    private Long usedUserId;
 
     /**
      * deleted_at

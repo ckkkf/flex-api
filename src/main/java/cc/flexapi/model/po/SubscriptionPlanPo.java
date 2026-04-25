@@ -20,7 +20,7 @@ public class SubscriptionPlanPo {
      */
     @Id
     @Column("id")
-    private Integer id;
+    private Long id;
 
     /**
      * title
@@ -56,7 +56,7 @@ public class SubscriptionPlanPo {
      * duration_value
      */
     @Column("duration_value")
-    private Integer durationValue;
+    private Long durationValue;
 
     /**
      * custom_seconds
@@ -74,7 +74,7 @@ public class SubscriptionPlanPo {
      * sort_order
      */
     @Column("sort_order")
-    private Integer sortOrder;
+    private Long sortOrder;
 
     /**
      * stripe_price_id
@@ -92,7 +92,7 @@ public class SubscriptionPlanPo {
      * max_purchase_per_user
      */
     @Column("max_purchase_per_user")
-    private Integer maxPurchasePerUser;
+    private Long maxPurchasePerUser;
 
     /**
      * upgrade_group

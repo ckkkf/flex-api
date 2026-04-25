@@ -14,17 +14,17 @@ public class SubscriptionOrderDto {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * user_id
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * plan_id
      */
-    private Integer planId;
+    private Long planId;
 
     /**
      * money

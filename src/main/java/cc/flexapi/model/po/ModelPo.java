@@ -21,7 +21,7 @@ public class ModelPo {
      */
     @Id
     @Column("id")
-    private Integer id;
+    private Long id;
 
     /**
      * model_name
@@ -51,7 +51,7 @@ public class ModelPo {
      * vendor_id
      */
     @Column("vendor_id")
-    private Integer vendorId;
+    private Long vendorId;
 
     /**
      * endpoints
@@ -69,7 +69,7 @@ public class ModelPo {
      * sync_official
      */
     @Column("sync_official")
-    private Integer syncOfficial;
+    private Long syncOfficial;
 
     /**
      * created_time
@@ -93,6 +93,6 @@ public class ModelPo {
      * name_rule
      */
     @Column("name_rule")
-    private Integer nameRule;
+    private Long nameRule;
 
 }

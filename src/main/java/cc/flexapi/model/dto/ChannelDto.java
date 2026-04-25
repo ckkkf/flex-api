@@ -14,12 +14,12 @@ public class ChannelDto {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * type
      */
-    private Integer type;
+    private Long type;
 
     /**
      * key
@@ -49,7 +49,7 @@ public class ChannelDto {
     /**
      * weight
      */
-    private Integer weight;
+    private Long weight;
 
     /**
      * created_time
@@ -64,7 +64,7 @@ public class ChannelDto {
     /**
      * in milliseconds
      */
-    private Integer responseTime;
+    private Long responseTime;
 
     /**
      * base_url
@@ -119,7 +119,7 @@ public class ChannelDto {
     /**
      * auto_ban
      */
-    private Integer autoBan;
+    private Long autoBan;
 
     /**
      * other_info

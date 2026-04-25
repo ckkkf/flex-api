@@ -39,7 +39,7 @@ public class TaskDto {
     /**
      * user_id
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * 修正计费用
@@ -49,12 +49,12 @@ public class TaskDto {
     /**
      * channel_id
      */
-    private Integer channelId;
+    private Long channelId;
 
     /**
      * quota
      */
-    private Integer quota;
+    private Long quota;
 
     /**
      * 任务类型, song, lyrics, description-mode

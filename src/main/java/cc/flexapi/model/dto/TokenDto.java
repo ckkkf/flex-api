@@ -15,12 +15,12 @@ public class TokenDto {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * user_id
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * key
@@ -55,7 +55,7 @@ public class TokenDto {
     /**
      * remain_quota
      */
-    private Integer remainQuota;
+    private Long remainQuota;
 
     /**
      * unlimited_quota
@@ -80,7 +80,7 @@ public class TokenDto {
     /**
      * used quota
      */
-    private Integer usedQuota;
+    private Long usedQuota;
 
     /**
      * group

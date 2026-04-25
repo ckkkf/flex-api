@@ -20,7 +20,7 @@ public class SetupPo {
      */
     @Id
     @Column("id")
-    private Integer id;
+    private Long id;
 
     /**
      * version

@@ -20,13 +20,13 @@ public class QuotaDataPo {
      */
     @Id
     @Column("id")
-    private Integer id;
+    private Long id;
 
     /**
      * user_id
      */
     @Column("user_id")
-    private Integer userId;
+    private Long userId;
 
     /**
      * username
@@ -50,18 +50,18 @@ public class QuotaDataPo {
      * token_used
      */
     @Column("token_used")
-    private Integer tokenUsed;
+    private Long tokenUsed;
 
     /**
      * count
      */
     @Column("count")
-    private Integer count;
+    private Long count;
 
     /**
      * quota
      */
     @Column("quota")
-    private Integer quota;
+    private Long quota;
 
 }

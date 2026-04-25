@@ -1,6 +1,8 @@
 package cc.flexapi.config;
 
+import cn.dev33.satoken.context.SaTokenContext;
 import cn.dev33.satoken.reactor.filter.SaReactorFilter;
+import cn.dev33.satoken.reactor.spring.SaTokenContextForSpringReactor;
 import cn.dev33.satoken.util.SaResult;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -16,7 +16,7 @@ public class UserVo {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * username
@@ -77,19 +77,19 @@ public class UserVo {
     /**
      * quota
      */
-    private Integer quota;
+    private Long quota;
 
     /**
      * used quota
      */
     @JsonProperty("used_quota")
-    private Integer usedQuota;
+    private Long usedQuota;
 
     /**
      * request number
      */
     @JsonProperty("request_count")
-    private Integer requestCount;
+    private Long requestCount;
 
     /**
      * group
@@ -106,25 +106,25 @@ public class UserVo {
      * aff_count
      */
     @JsonProperty("aff_count")
-    private Integer affCount;
+    private Long affCount;
 
     /**
      * 邀请剩余额度
      */
     @JsonProperty("aff_quota")
-    private Integer affQuota;
+    private Long affQuota;
 
     /**
      * 邀请历史额度
      */
     @JsonProperty("aff_history_quota")
-    private Integer affHistory;
+    private Long affHistory;
 
     /**
      * inviter_id
      */
     @JsonProperty("inviter_id")
-    private Integer inviterId;
+    private Long inviterId;
 
     /**
      * deleted_at

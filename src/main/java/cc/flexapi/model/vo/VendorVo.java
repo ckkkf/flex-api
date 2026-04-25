@@ -16,7 +16,7 @@ public class VendorVo {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * name

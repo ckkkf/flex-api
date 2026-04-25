@@ -15,12 +15,12 @@ public class TwoFADto {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * user_id
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * TOTP密钥，不返回给前端
@@ -35,7 +35,7 @@ public class TwoFADto {
     /**
      * failed_attempts
      */
-    private Integer failedAttempts;
+    private Long failedAttempts;
 
     /**
      * locked_until

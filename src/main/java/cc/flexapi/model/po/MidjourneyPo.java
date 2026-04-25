@@ -20,19 +20,19 @@ public class MidjourneyPo {
      */
     @Id
     @Column("id")
-    private Integer id;
+    private Long id;
 
     /**
      * code
      */
     @Column("code")
-    private Integer code;
+    private Long code;
 
     /**
      * user_id
      */
     @Column("user_id")
-    private Integer userId;
+    private Long userId;
 
     /**
      * action
@@ -128,13 +128,13 @@ public class MidjourneyPo {
      * channel_id
      */
     @Column("channel_id")
-    private Integer channelId;
+    private Long channelId;
 
     /**
      * quota
      */
     @Column("quota")
-    private Integer quota;
+    private Long quota;
 
     /**
      * buttons

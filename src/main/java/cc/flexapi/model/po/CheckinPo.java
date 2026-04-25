@@ -20,13 +20,13 @@ public class CheckinPo {
      */
     @Id
     @Column("id")
-    private Integer id;
+    private Long id;
 
     /**
      * user_id
      */
     @Column("user_id")
-    private Integer userId;
+    private Long userId;
 
     /**
      * 格式: YYYY-MM-DD
@@ -38,7 +38,7 @@ public class CheckinPo {
      * quota_awarded
      */
     @Column("quota_awarded")
-    private Integer quotaAwarded;
+    private Long quotaAwarded;
 
     /**
      * created_at

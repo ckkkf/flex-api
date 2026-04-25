@@ -15,13 +15,13 @@ public class LogVo {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * user_id
      */
     @JsonProperty("user_id")
-    private Integer userId;
+    private Long userId;
 
     /**
      * created_at
@@ -32,7 +32,7 @@ public class LogVo {
     /**
      * type
      */
-    private Integer type;
+    private Long type;
 
     /**
      * content
@@ -59,25 +59,25 @@ public class LogVo {
     /**
      * quota
      */
-    private Integer quota;
+    private Long quota;
 
     /**
      * prompt_tokens
      */
     @JsonProperty("prompt_tokens")
-    private Integer promptTokens;
+    private Long promptTokens;
 
     /**
      * completion_tokens
      */
     @JsonProperty("completion_tokens")
-    private Integer completionTokens;
+    private Long completionTokens;
 
     /**
      * use_time
      */
     @JsonProperty("use_time")
-    private Integer useTime;
+    private Long useTime;
 
     /**
      * is_stream
@@ -89,7 +89,7 @@ public class LogVo {
      * channel_id
      */
     @JsonProperty("channel")
-    private Integer channelId;
+    private Long channelId;
 
     /**
      * channel_name
@@ -101,7 +101,7 @@ public class LogVo {
      * token_id
      */
     @JsonProperty("token_id")
-    private Integer tokenId;
+    private Long tokenId;
 
     /**
      * group

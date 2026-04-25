@@ -16,13 +16,13 @@ public class TokenVo {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * user_id
      */
     @JsonProperty("user_id")
-    private Integer userId;
+    private Long userId;
 
     /**
      * status
@@ -56,7 +56,7 @@ public class TokenVo {
      * remain_quota
      */
     @JsonProperty("remain_quota")
-    private Integer remainQuota;
+    private Long remainQuota;
 
     /**
      * unlimited_quota
@@ -86,7 +86,7 @@ public class TokenVo {
      * used quota
      */
     @JsonProperty("used_quota")
-    private Integer usedQuota;
+    private Long usedQuota;
 
     /**
      * group

@@ -30,7 +30,7 @@ public class AbilityPo {
      * channel_id
      */
     @Column("channel_id")
-    private Integer channelId;
+    private Long channelId;
 
     /**
      * enabled
@@ -48,7 +48,7 @@ public class AbilityPo {
      * weight
      */
     @Column("weight")
-    private Integer weight;
+    private Long weight;
 
     /**
      * tag

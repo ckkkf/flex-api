@@ -26,7 +26,7 @@ public class AbilityVo {
      * channel_id
      */
     @JsonProperty("channel_id")
-    private Integer channelId;
+    private Long channelId;
 
     /**
      * enabled
@@ -41,7 +41,7 @@ public class AbilityVo {
     /**
      * weight
      */
-    private Integer weight;
+    private Long weight;
 
     /**
      * tag

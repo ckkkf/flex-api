@@ -27,11 +27,11 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
-    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
+//    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
     public <T> Mono<R<T>> handleBusinessException(BusinessException e) {
         log.error("[全局异常处理器] 捕获 BusinessException 异常：{}", e.getMessage(), e);
-//        return R.error(e.getMessage());
-        return Mono.error(e);
+        return R.error(e.getMessage());
+//        return Mono.error(e);
     }
 
     @ExceptionHandler(WebExchangeBindException.class)

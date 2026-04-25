@@ -15,18 +15,18 @@ public class MidjourneyVo {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * code
      */
-    private Integer code;
+    private Long code;
 
     /**
      * user_id
      */
     @JsonProperty("user_id")
-    private Integer userId;
+    private Long userId;
 
     /**
      * action
@@ -116,12 +116,12 @@ public class MidjourneyVo {
      * channel_id
      */
     @JsonProperty("channel_id")
-    private Integer channelId;
+    private Long channelId;
 
     /**
      * quota
      */
-    private Integer quota;
+    private Long quota;
 
     /**
      * buttons

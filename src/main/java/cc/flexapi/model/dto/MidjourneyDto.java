@@ -14,17 +14,17 @@ public class MidjourneyDto {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * code
      */
-    private Integer code;
+    private Long code;
 
     /**
      * user_id
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * action
@@ -104,12 +104,12 @@ public class MidjourneyDto {
     /**
      * channel_id
      */
-    private Integer channelId;
+    private Long channelId;
 
     /**
      * quota
      */
-    private Integer quota;
+    private Long quota;
 
     /**
      * buttons

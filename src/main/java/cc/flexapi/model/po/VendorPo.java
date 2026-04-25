@@ -21,7 +21,7 @@ public class VendorPo {
      */
     @Id
     @Column("id")
-    private Integer id;
+    private Long id;
 
     /**
      * name

@@ -14,12 +14,12 @@ public class LogDto {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * user_id
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * created_at
@@ -29,7 +29,7 @@ public class LogDto {
     /**
      * type
      */
-    private Integer type;
+    private Long type;
 
     /**
      * content
@@ -54,22 +54,22 @@ public class LogDto {
     /**
      * quota
      */
-    private Integer quota;
+    private Long quota;
 
     /**
      * prompt_tokens
      */
-    private Integer promptTokens;
+    private Long promptTokens;
 
     /**
      * completion_tokens
      */
-    private Integer completionTokens;
+    private Long completionTokens;
 
     /**
      * use_time
      */
-    private Integer useTime;
+    private Long useTime;
 
     /**
      * is_stream
@@ -79,7 +79,7 @@ public class LogDto {
     /**
      * channel_id
      */
-    private Integer channelId;
+    private Long channelId;
 
     /**
      * channel_name
@@ -89,7 +89,7 @@ public class LogDto {
     /**
      * token_id
      */
-    private Integer tokenId;
+    private Long tokenId;
 
     /**
      * group

@@ -16,7 +16,7 @@ public class CustomOAuthProviderVo {
     /**
      * id
      */
-    private Integer id;
+    private Long id;
 
     /**
      * Display name, e.g., "GitHub Enterprise"
@@ -101,7 +101,7 @@ public class CustomOAuthProviderVo {
      * 0=auto, 1=params, 2=header (Basic Auth)
      */
     @JsonProperty("auth_style")
-    private Integer authStyle;
+    private Long authStyle;
 
     /**
      * JSON policy for access control based on user info

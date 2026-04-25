@@ -29,11 +29,13 @@
     </scm>
     <properties>
         <java.version>23</java.version>
-        <spring-boot.version>4.0.5</spring-boot.version>
+<!--        <spring-boot.version>4.0.5</spring-boot.version>-->
+        <spring-boot.version>4.1.0-M4</spring-boot.version>
         <sa-token.version>1.45.0</sa-token.version>
         <r2dbc-postgresql.version>1.1.1.RELEASE</r2dbc-postgresql.version>
         <hutool.version>5.8.44</hutool.version>
         <openapi.version>2.5.0</openapi.version>
+        <springdoc-openapi.version>3.0.3</springdoc-openapi.version>
     </properties>
 
     <dependencies>
@@ -103,10 +105,12 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
+        <!-- Source: https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webflux-ui -->
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webflux-api</artifactId>
-            <version>${openapi.version}</version>
+            <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+            <version>${springdoc-openapi.version}</version>
+            <scope>compile</scope>
         </dependency>
 
 

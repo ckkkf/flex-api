@@ -19,7 +19,7 @@ class UserModelMappingTests {
     @Test
     void shouldMapUserPoToLoginVo() {
         UserPo userPO = new UserPo();
-        userPO.setId(1);
+        userPO.setId(1L);
         userPO.setUsername("flex-user");
         userPO.setPassword("hashed-password");
         userPO.setDisplayName("Flex User");

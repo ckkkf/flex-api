@@ -21,19 +21,19 @@ public class UserOAuthBindingPo {
      */
     @Id
     @Column("id")
-    private Integer id;
+    private Long id;
 
     /**
      * User ID - one binding per user per provider
      */
     @Column("user_id")
-    private Integer userId;
+    private Long userId;
 
     /**
      * Custom OAuth provider ID
      */
     @Column("provider_id")
-    private Integer providerId;
+    private Long providerId;
 
     /**
      * User ID from OAuth provider - one OAuth account per provider
