@@ -6,5 +6,9 @@ package cc.flexapi.fliters;
  * @description
  * @since 2026-04-25 14:04
  */
-public class LimitingFilter {
+public class LimitingFilter  {
+
+
+
+
 }

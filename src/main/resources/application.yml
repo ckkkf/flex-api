@@ -82,3 +82,27 @@ springdoc:
     urlsPrimaryName: runtime
     filter: true
 
+
+flexapi:
+  cors:
+    enabled: true
+    allowed-origin-patterns:
+      - http://localhost:*
+      - http://127.0.0.1:*
+      - https://localhost:*
+      - https://127.0.0.1:*
+    allowed-methods:
+      - GET
+      - POST
+      - PUT
+      - PATCH
+      - DELETE
+      - OPTIONS
+    allowed-headers:
+      - "*"
+    exposed-headers:
+      - Authorization
+      - Content-Disposition
+      - X-Idempotency-Key
+    allow-credentials: true
+    max-age: 3600

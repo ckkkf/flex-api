@@ -17,7 +17,9 @@
     <description>flex-api</description>
 
     <properties>
-        <java.version>23</java.version>
+        <java.version>26</java.version>
+        <maven.compiler.source>26</maven.compiler.source>
+        <maven.compiler.target>26</maven.compiler.target>
         <spring-boot.version>4.1.0-M4</spring-boot.version>
         <sa-token.version>1.45.0</sa-token.version>
         <r2dbc-postgresql.version>1.1.1.RELEASE</r2dbc-postgresql.version>
@@ -27,6 +29,7 @@
     </properties>
 
     <dependencies>
+
         <!-- ================================ Spring ================================ -->
         <!-- spring-boot -->
         <dependency>
@@ -96,6 +99,7 @@
             <artifactId>spring-boot-starter-data-redis-reactive</artifactId>
         </dependency>
 
+
         <!-- ================================ Tools ================================ -->
         <!-- lombok -->
         <dependency>
@@ -118,6 +122,13 @@
         <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-reactor-spring-boot4-starter</artifactId>
+            <version>${sa-token.version}</version>
+        </dependency>
+
+        <!-- Sa-Token Redis -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-redis-jackson</artifactId>
             <version>${sa-token.version}</version>
         </dependency>
 
